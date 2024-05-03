@@ -23,8 +23,8 @@ class MovieVH extends RecyclerView.ViewHolder{
     TextView dateSortie;
     TextView synopsis;
     TextView adult;
+    TextView id;
     private LinearLayout movieLayout;
-    private AdapterView.OnItemClickListener listener; // Ajout de l'interface
     private MovieAdapter adapter;
 
     //Prend une vue (itemView) en paramètre et initialise le ViewHolder avec cette vue. Il initialise également les vues (comme TextView) à l'intérieur de l'élément de vue.
@@ -37,6 +37,7 @@ class MovieVH extends RecyclerView.ViewHolder{
         synopsis = itemView.findViewById(R.id.synopsisTV);
         adult = itemView.findViewById(R.id.adultTV);
         movieLayout = itemView.findViewById(R.id.movieLayout);
+        id = itemView.findViewById(R.id.idTV);
     }
 
     //Lie l'adaptateur au ViewHolder. Permet d'obtenir une référence à l'adaptateur dans le ViewHolder, ce qui peut être utile pour effectuer des actions sur l'adaptateur depuis le ViewHolder,
@@ -74,12 +75,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieVH>{
         holder.duree.setText(String.valueOf(movies.get(position).getDuree()));
         holder.synopsis.setText(movies.get(position).getSynopsis());
         holder.adult.setText(String.valueOf(movies.get(position).getAdult()));
+        holder.id.setText(String.valueOf(movies.get(position).getId()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(v.getContext(), MovieDetailsView.class);
-                intent.putExtra("movieID",movies.get(v.getId()).getId());
-                v.getContext().startActivity(intent);
+                int movieposition = holder.getAdapterPosition(); // Obtenez la position actuelle
+                if (movieposition != RecyclerView.NO_POSITION) { // Vérifiez si l'élément existe toujours
+                    Intent intent = new Intent(v.getContext(), MovieDetailsView.class);
+                    intent.putExtra("movieID",String.valueOf(movies.get(movieposition).getId()));
+                    v.getContext().startActivity(intent);
+                }
             }
         });
     }

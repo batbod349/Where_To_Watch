@@ -33,7 +33,7 @@ public class MovieDetailsView extends AppCompatActivity {
             String movieID = intent.getStringExtra("movieID");
             // Faites quelque chose avec movieID, par exemple, affichez-le dans un TextView
             TextView textView = findViewById(R.id.textView_movie_id);
-            textView.setText(String.valueOf(movieID));
+            textView.setText(movieID);
         }
     }
 }
