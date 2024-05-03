@@ -11,10 +11,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.PopularMovieView;
 
 public class MainActivity extends AppCompatActivity {
     Button getPopularMovieButt;
+    public MovieService movieService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

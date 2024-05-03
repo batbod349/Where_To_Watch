@@ -17,6 +17,8 @@ public class Movie {
     private String synopsis;
     @SerializedName("adult")
     private Boolean adult;
+    //@SerializedName("genres")
+    //private String genres;
 
     public String getDuree() {
         return duree;
