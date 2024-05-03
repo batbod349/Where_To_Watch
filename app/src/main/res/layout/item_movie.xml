@@ -10,6 +10,7 @@
     app:contentPadding="10dp">
 
     <LinearLayout
+        android:id="@+id/movieLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -60,6 +61,11 @@
         </LinearLayout>
         <TextView
             android:id="@+id/synopsisTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+        <TextView
+            android:id="@+id/idTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />

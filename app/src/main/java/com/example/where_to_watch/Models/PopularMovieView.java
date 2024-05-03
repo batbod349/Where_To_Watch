@@ -1,7 +1,10 @@
 package com.example.where_to_watch.Models;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +27,7 @@ import retrofit2.Retrofit;
 public class PopularMovieView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MovieService movieService;
+
     int counter = 0;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,33 +46,31 @@ public class PopularMovieView extends AppCompatActivity {
         Retrofit retrofit = RetrofitClient.getClient();
         movieService = retrofit.create(MovieService.class);
 
-        findViewById(R.id.button).setOnClickListener(view -> {
-            // Appeler la méthode pour récupérer les films populaires
-            Call<MovieResponse> call = movieService.getPopularMovies("d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
-            call.enqueue(new Callback<MovieResponse>() {
-                @Override
-                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                    if (response.isSuccessful()) {
-                        //Récupère le contenu de la réponse
-                        MovieResponse movieResponse = response.body();
-                        //Récupère les différernts films contenu dans la réponse pour les ranger dans une List
-                        List<Movie> movies = movieResponse.getPopularMovies();
-                        //Créer et initialise notre adapteur avec les films
-                        MovieAdapter adapter = new MovieAdapter(movies);
-                        //Relie le recyclerView à l'adapter
-                        recyclerView.setAdapter(adapter);
-                        //Notifie l'adapter qu'il y a eu des ajouts
-                        adapter.notifyItemInserted(movies.size()-1);
+        // Appeler la méthode pour récupérer les films populaires
+        Call<MovieResponse> call = movieService.getPopularMovies("d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
+        call.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                if (response.isSuccessful()) {
+                    //Récupère le contenu de la réponse
+                    MovieResponse movieResponse = response.body();
+                    //Récupère les différernts films contenu dans la réponse pour les ranger dans une List
+                    List<Movie> movies = movieResponse.getPopularMovies();
+                    //Créer et initialise notre adapteur avec les films
+                    MovieAdapter adapter = new MovieAdapter(movies);
+                    //Relie le recyclerView à l'adapter
+                    recyclerView.setAdapter(adapter);
+                    //Notifie l'adapter qu'il y a eu des ajouts
+                    adapter.notifyItemInserted(movies.size()-1);
 
-                    } else {
-                        // Gérer les erreurs
-                    }
+                } else {
+                    // Gérer les erreurs
                 }
-                @Override
-                public void onFailure(Call<MovieResponse> call, Throwable t) {
-                    System.out.println("Erreur lors de la récupération des films : " + t.getMessage());
-                }
-            });
+            }
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                System.out.println("Erreur lors de la récupération des films : " + t.getMessage());
+            }
         });
     }
 }
