@@ -26,8 +26,6 @@ import retrofit2.Retrofit;
 
 public class PopularMovieView extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private MovieService movieService;
-
     int counter = 0;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,7 +42,7 @@ public class PopularMovieView extends AppCompatActivity {
 
         // Créer une instance de MovieService en utilisant Retrofit
         Retrofit retrofit = RetrofitClient.getClient();
-        movieService = retrofit.create(MovieService.class);
+        MovieService movieService = retrofit.create(MovieService.class);
 
         // Appeler la méthode pour récupérer les films populaires
         Call<MovieResponse> call = movieService.getPopularMovies("d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");

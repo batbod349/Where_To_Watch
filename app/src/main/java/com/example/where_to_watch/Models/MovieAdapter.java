@@ -23,7 +23,6 @@ class MovieVH extends RecyclerView.ViewHolder{
     TextView dateSortie;
     TextView synopsis;
     TextView adult;
-    TextView id;
     private LinearLayout movieLayout;
     private MovieAdapter adapter;
 
@@ -37,7 +36,6 @@ class MovieVH extends RecyclerView.ViewHolder{
         synopsis = itemView.findViewById(R.id.synopsisTV);
         adult = itemView.findViewById(R.id.adultTV);
         movieLayout = itemView.findViewById(R.id.movieLayout);
-        id = itemView.findViewById(R.id.idTV);
     }
 
     //Lie l'adaptateur au ViewHolder. Permet d'obtenir une référence à l'adaptateur dans le ViewHolder, ce qui peut être utile pour effectuer des actions sur l'adaptateur depuis le ViewHolder,
@@ -75,7 +73,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieVH>{
         holder.duree.setText(String.valueOf(movies.get(position).getDuree()));
         holder.synopsis.setText(movies.get(position).getSynopsis());
         holder.adult.setText(String.valueOf(movies.get(position).getAdult()));
-        holder.id.setText(String.valueOf(movies.get(position).getId()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
