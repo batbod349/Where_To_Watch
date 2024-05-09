@@ -87,6 +87,30 @@ public class MovieDetailsView extends AppCompatActivity {
                         genre += genres.get(i).getName() + " ";
                         }
                         genreTV.setText(genre);
+
+                        // Récupération des crédits du film //
+                        Call<MovieResponse> callCredits = movieService.getMoviesCredits(String.valueOf(movie.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
+                        callCredits.enqueue(new Callback<MovieResponse>() {
+                            @Override
+                            public void onResponse(Call<MovieResponse> callCredits, Response<MovieResponse> responseCredit) {
+                                if (response.isSuccessful()) {
+                                   MovieResponse movieResponse = responseCredit.body();
+                                   List<People> peoples = movieResponse.getMovieCredits();
+                                   String acteur = "";
+                                   for (int i = 0 ; i < 3 ; i++){
+                                       acteur += peoples.get(i).getName() + " ";
+                                   }
+                                   acteursTV.setText(peoples.get(1).getName());
+
+                                } else {
+                                    Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<MovieResponse> callCredits, Throwable t) {
+
+                            }
+                        });
                     } else {
                         Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
                     }

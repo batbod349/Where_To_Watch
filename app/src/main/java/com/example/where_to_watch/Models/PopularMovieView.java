@@ -52,7 +52,7 @@ public class PopularMovieView extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     //Récupère le contenu de la réponse
                     MovieResponse movieResponse = response.body();
-                    //Récupère les différernts films contenu dans la réponse pour les ranger dans une List
+                    //Récupère les différents films contenu dans la réponse pour les ranger dans une List
                     List<Movie> movies = movieResponse.getPopularMovies();
                     //Créer et initialise notre adapteur avec les films
                     MovieAdapter adapter = new MovieAdapter(movies);
