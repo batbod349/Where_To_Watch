@@ -2,6 +2,8 @@ package com.example.where_to_watch.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Movie {
     @SerializedName("title")
     private String title;
@@ -17,9 +19,12 @@ public class Movie {
     private String synopsis;
     @SerializedName("adult")
     private Boolean adult;
-    //@SerializedName("genres")
-    //private String genres;
+    @SerializedName("genres")
+    private List<Genre> genres;
 
+    public List<Genre> getGenres() {
+        return genres;
+    }
     public String getDuree() {
         return duree;
     }

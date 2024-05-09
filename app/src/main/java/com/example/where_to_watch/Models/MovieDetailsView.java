@@ -15,7 +15,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.R;
+import com.example.where_to_watch.Responses.MovieResponse;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,12 +74,19 @@ public class MovieDetailsView extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Movie> call, Response<Movie> response) {
                     if (response.isSuccessful()) {
+                        String genre = "";
                         Movie movie = response.body();
                         titleTV.setText(movie.getTitle());
                         dureeTV.setText(String.valueOf(movie.getDuree()));
                         dateSortieTV.setText(movie.getDateSortie());
                         synospisTV.setText(movie.getSynopsis());
                         Picasso.get().load("https://image.tmdb.org/t/p/w500" + movie.getPosterPath()).into(poster);
+                        List<Genre> genres;
+                        genres = movie.getGenres();
+                        for (int i = 0 ; i < genres.size() ; i++) {
+                        genre += genres.get(i).getName() + " ";
+                        }
+                        genreTV.setText(genre);
                     } else {
                         Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
                     }
