@@ -3,6 +3,7 @@ package com.example.where_to_watch.Models;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.example.where_to_watch.Responses.MovieResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,7 +86,7 @@ public class MovieDetailsView extends AppCompatActivity {
                         List<Genre> genres;
                         genres = movie.getGenres();
                         for (int i = 0 ; i < genres.size() ; i++) {
-                        genre += genres.get(i).getName() + " ";
+                            genre += genres.get(i).getName() + " ";
                         }
                         genreTV.setText(genre);
 
@@ -93,25 +95,38 @@ public class MovieDetailsView extends AppCompatActivity {
                         callCredits.enqueue(new Callback<MovieResponse>() {
                             @Override
                             public void onResponse(Call<MovieResponse> callCredits, Response<MovieResponse> responseCredit) {
-                                if (response.isSuccessful()) {
+                                if (responseCredit.isSuccessful()) {
                                    MovieResponse movieResponse = responseCredit.body();
-                                   List<People> peoples = movieResponse.getMovieCredits();
-                                   String acteur = "";
-                                   for (int i = 0 ; i < 3 ; i++){
-                                       acteur += peoples.get(i).getName() + " ";
+                                   List<People> listActeurs = movieResponse.getMovieActeurs();
+                                   List<People> listCrew = movieResponse.getMovieCrew();
+
+                                   //Récupère la list des acteurs
+                                   Integer nbActeur = listActeurs.size();
+                                   Integer topNb = nbActeur >= 3 ? 3 : nbActeur; //Ternaire qui retourne 3 si 3 ou plus de people sinon le nombre de people (c'est un if)
+                                   String acteurs = "";
+                                   for (int i = 0 ; i < topNb ; i++){
+                                       acteurs += listActeurs.get(i).getName() + "    ";
                                    }
-                                   acteursTV.setText(peoples.get(1).getName());
+                                   acteursTV.setText(acteurs);
+
+                                   // Récupère la list des realisateurs
+                                   List<People> listReal = listCrew.stream().filter(people -> people.getWork().equals("Directing")).collect(Collectors.toList());
+                                   Integer nbReal = listReal.size();
+                                   topNb = nbReal >= 3 ? 3 : nbReal; //Ternaire qui retourne 3 si 3 ou plus de people sinon le nombre de people (c'est un if)
+                                   realsTV.setText(listReal.get(0).getName());
 
                                 } else {
-                                    Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
+                                    Log.e("MovieDetailsView", "Erreur dans la réponse des crédits : " + responseCredit.errorBody());
+                                    Toast.makeText(MovieDetailsView.this, "Erreur dans la réponse des crédits : " + responseCredit.message(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                             @Override
                             public void onFailure(Call<MovieResponse> callCredits, Throwable t) {
-
+                                System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
                             }
                         });
                     } else {
+                        Log.e("MovieDetailsView", "Erreur dans la réponse des crédits : " + response.errorBody());
                         Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -120,6 +135,7 @@ public class MovieDetailsView extends AppCompatActivity {
                     System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
                 }
             });
+            //Watch Providers
         }
     }
 }

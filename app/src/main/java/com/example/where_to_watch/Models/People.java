@@ -2,13 +2,15 @@ package com.example.where_to_watch.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class People {
     @SerializedName("id")
     private Integer id;
     @SerializedName("name")
     private String name;
     @SerializedName("gender")
-    private Boolean gender;
+    private Integer gender;
     @SerializedName("birthday")
     private String birthday;
     @SerializedName("deathday")
@@ -36,11 +38,11 @@ public class People {
         this.name = name;
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

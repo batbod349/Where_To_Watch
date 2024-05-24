@@ -21,6 +21,16 @@ public class Movie {
     private Boolean adult;
     @SerializedName("genres")
     private List<Genre> genres;
+    @SerializedName("provider_name")
+    private List<String> providers;
+
+    public List<String> getProviders() {
+        return providers;
+    }
+
+    public void setProviders(List<String> providers) {
+        this.providers = providers;
+    }
 
     public List<Genre> getGenres() {
         return genres;
