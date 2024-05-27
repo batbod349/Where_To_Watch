@@ -125,6 +125,21 @@ public class MovieDetailsView extends AppCompatActivity {
                                 System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
                             }
                         });
+
+                        Call<WatchProviders> callProviders = movieService.getWatchProviders(String.valueOf(movie.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d");
+                        callProviders.enqueue(new Callback<WatchProviders>() {
+                            @Override
+                            public void onResponse(Call<WatchProviders> callProviders, Response<WatchProviders> responseProviders) {
+                                WatchProviders Providers = responseProviders.body();
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<WatchProviders> callProviders, Throwable t) {
+
+                            }
+                        });
+
                     } else {
                         Log.e("MovieDetailsView", "Erreur dans la réponse des crédits : " + response.errorBody());
                         Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
