@@ -8,7 +8,7 @@ public class WatchProviders {
     @SerializedName("id")
     private Integer id;
     @SerializedName("provider_name")
-    private List<String> providers;
+    private String name;
 
     public Integer getId() {
         return id;
@@ -18,11 +18,11 @@ public class WatchProviders {
         this.id = id;
     }
 
-    public List<String> getProviders() {
-        return providers;
+    public String getName() {
+        return name;
     }
 
-    public void setProviders(List<String> providers) {
-        this.providers = providers;
+    public void setName(String name) {
+        this.name = name;
     }
 }

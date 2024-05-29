@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Genre {
     @SerializedName("id")
-    Integer id;
+    Integer idMovie;
     @SerializedName("name")
     String name;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdMovie() {
+        return idMovie;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdMovie(Integer idMovie) {
+        this.idMovie = idMovie;
     }
 
     public String getName() {

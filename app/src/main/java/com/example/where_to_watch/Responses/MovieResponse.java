@@ -1,6 +1,5 @@
 package com.example.where_to_watch.Responses;
 
-import com.example.where_to_watch.Models.Genre;
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;
 import com.google.gson.annotations.SerializedName;
