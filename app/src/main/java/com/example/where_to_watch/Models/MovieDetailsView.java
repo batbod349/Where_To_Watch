@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +44,9 @@ public class MovieDetailsView extends AppCompatActivity {
     TextView synospisTV;
     ImageView poster;
     ListView listProviders;
+    Button aboBut;
+    Button rentBut;
+    Button buyBut;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +69,9 @@ public class MovieDetailsView extends AppCompatActivity {
         synospisTV = findViewById(R.id.movieSynopsisTV);
         poster = findViewById(R.id.poster);
         listProviders = findViewById(R.id.listProviders);
+        aboBut = findViewById(R.id.aboBut);
+        rentBut = findViewById(R.id.rentBut);
+        buyBut = findViewById(R.id.buyBut);
 
         Intent intent = getIntent();
 
@@ -97,56 +105,88 @@ public class MovieDetailsView extends AppCompatActivity {
                         genreTV.setText(genre);
 
                         // Récupération des crédits du film //
-                        Call<MovieResponse> callCredits = movieService.getMoviesCredits(String.valueOf(movie.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
+                        Call<MovieResponse> callCredits = movieService.getMoviesCredits(String.valueOf(movie.getId()), "d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
                         callCredits.enqueue(new Callback<MovieResponse>() {
                             @Override
                             public void onResponse(Call<MovieResponse> callCredits, Response<MovieResponse> responseCredit) {
                                 if (responseCredit.isSuccessful()) {
-                                   MovieResponse movieResponse = responseCredit.body();
-                                   List<People> listActeurs = movieResponse.getMovieActeurs();
-                                   List<People> listCrew = movieResponse.getMovieCrew();
+                                    MovieResponse movieResponse = responseCredit.body();
+                                    List<People> listActeurs = movieResponse.getMovieActeurs();
+                                    List<People> listCrew = movieResponse.getMovieCrew();
 
-                                   //Récupère la list des acteurs
-                                   Integer nbActeur = listActeurs.size();
-                                   Integer topNb = nbActeur >= 3 ? 3 : nbActeur; //Ternaire qui retourne 3 si 3 ou plus de people sinon le nombre de people (c'est un if)
-                                   String acteurs = "";
-                                   for (int i = 0 ; i < topNb ; i++){
-                                       acteurs += listActeurs.get(i).getName() + "    ";
-                                   }
-                                   acteursTV.setText(acteurs);
+                                    // Récupère la liste des acteurs
+                                    Integer nbActeur = listActeurs.size();
+                                    Integer topNb = nbActeur >= 3 ? 3 : nbActeur;
+                                    String acteurs = "";
+                                    for (int i = 0 ; i < topNb ; i++) {
+                                        acteurs += listActeurs.get(i).getName() + "    ";
+                                    }
+                                    acteursTV.setText(acteurs);
 
-                                   // Récupère la list des realisateurs
-                                   List<People> listReal = listCrew.stream().filter(people -> people.getWork().equals("Directing")).collect(Collectors.toList());
-                                   realsTV.setText(listReal.get(0).getName());
+                                    // Récupère la liste des réalisateurs
+                                    List<People> listReal = listCrew.stream()
+                                            .filter(people -> people.getWork().equals("Directing"))
+                                            .collect(Collectors.toList());
+
+                                    if (listReal.isEmpty()) {
+                                        realsTV.setText("Aucun réalisateur trouvé");
+                                    } else {
+                                        realsTV.setText(listReal.get(0).getName());
+                                    }
 
                                 } else {
                                     Log.e("MovieDetailsView", "Erreur dans la réponse des crédits : " + responseCredit.errorBody());
                                     Toast.makeText(MovieDetailsView.this, "Erreur dans la réponse des crédits : " + responseCredit.message(), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<MovieResponse> callCredits, Throwable t) {
                                 System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
                             }
                         });
 
-                        Call<WatchProviderResponse> callProviders = movieService.getWatchProviders(String.valueOf(movie.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d");
+                        Call<WatchProviderResponse> callProviders = movieService.getWatchProviders(String.valueOf(movie.getId()), "d85ec7da27477ca0d57dfd8ffd9fd94d");
                         callProviders.enqueue(new Callback<WatchProviderResponse>() {
                             @Override
                             public void onResponse(Call<WatchProviderResponse> callProviders, Response<WatchProviderResponse> responseProviders) {
                                 if (responseProviders.isSuccessful()) {
                                     WatchProviderResponse response = responseProviders.body();
                                     if (response != null) {
-                                        // Supposons que vous voulez les providers pour le pays "FR"
                                         CountryWatchProviders countryProviders = response.getResults().get("FR");
-                                        //if (countryProviders != null && countryProviders.getFlatrate() != null) {
-                                            //List<WatchProviders> providers = countryProviders.getFlatrate();
-                                            List<WatchProviders> providers = countryProviders.getBuy();
-                                            List<String> providersName = providers.stream().map(WatchProviders::getName).collect(Collectors.toList());
-
+                                        if (countryProviders == null) {
+                                            buyBut.setVisibility(View.INVISIBLE);
+                                            rentBut.setVisibility(View.INVISIBLE);
+                                            aboBut.setVisibility(View.INVISIBLE);
+                                            List<String> providersName = new ArrayList<>();
+                                            providersName.add("\nAucune plateforme ne possède ce film en France.");
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName);
                                             listProviders.setAdapter(adapter);
-                                        //}
+                                        } else {
+                                            buyBut.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    updateListView(countryProviders.getBuy(), "\nCe film n'est pas disponible à l'achat");
+                                                }
+                                            });
+
+                                            rentBut.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    updateListView(countryProviders.getRent(), "\nCe film n'est pas disponible à la location");
+                                                }
+                                            });
+
+                                            aboBut.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    updateListView(countryProviders.getFlatrate(), "\nCe film n'est pas disponible via un abonnement");
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        Log.e("MovieDetailsView", "La réponse des providers est nulle");
+                                        Toast.makeText(MovieDetailsView.this, "Impossible de récupérer les données des providers.", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Log.e("MovieDetailsView", "Erreur dans la réponse des providers : " + responseProviders.errorBody());
@@ -157,9 +197,11 @@ public class MovieDetailsView extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<WatchProviderResponse> callProviders, Throwable t) {
                                 Log.e("MovieDetailsView", "Erreur lors de la récupération des providers : " + t.getMessage());
+                                Toast.makeText(MovieDetailsView.this, "Erreur lors de la récupération des providers : " + t.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-                }
+
+                    }
             }
 
                 @Override
@@ -168,5 +210,19 @@ public class MovieDetailsView extends AppCompatActivity {
                     }
                 });
         }
+    }
+    private void updateListView(List<WatchProviders> providers, String defaultMessage) {
+        List<String> providersName = new ArrayList<>();
+        if (providers == null || providers.isEmpty()) {
+            providersName.add(defaultMessage);
+        } else {
+            providersName = providers.stream().map(WatchProviders::getName).collect(Collectors.toList());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName);
+        listProviders.setAdapter(adapter);
+
+        buyBut.setVisibility(View.INVISIBLE);
+        rentBut.setVisibility(View.INVISIBLE);
+        aboBut.setVisibility(View.INVISIBLE);
     }
 }
