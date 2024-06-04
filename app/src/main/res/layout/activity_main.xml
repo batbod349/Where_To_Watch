@@ -13,12 +13,15 @@
         android:layout_height="wrap_content"
         android:text="Films populaires"
         tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="65dp" />
+        tools:layout_editor_absoluteY="65dp"
+        tools:ignore="MissingConstraints" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewGenre"
-        android:layout_width="240dp"
-        android:layout_height="729dp"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="1dp" />
+    <ListView
+        android:id="@+id/listGenre"
+        android:layout_width="409dp"
+        android:layout_height="616dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="114dp"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

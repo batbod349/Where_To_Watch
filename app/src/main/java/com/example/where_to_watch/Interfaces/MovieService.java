@@ -1,5 +1,6 @@
 package com.example.where_to_watch.Interfaces;
 
+import com.example.where_to_watch.Models.Genre;
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.Models.WatchProviders;
@@ -19,4 +20,8 @@ public interface MovieService {
     Call<MovieResponse> getMoviesCredits(@Path("movieID")String movieID, @Query("api_key")String apiKey, @Query("language")String language);
     @GET("movie/{movieID}/watch/providers")
     Call<WatchProviders> getWatchProviders(@Path("movieID")String movieID, @Query("api_key")String apiKey);
+    @GET("genre/movie/list")
+    Call<Genre> getGenre(@Query("api_key")String apiKey, @Query("language")String language);
+
+
 }
