@@ -2,11 +2,9 @@ package com.example.where_to_watch.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class People {
     @SerializedName("id")
-    private Integer id;
+    private Integer idMovie;
     @SerializedName("name")
     private String name;
     @SerializedName("gender")
@@ -22,12 +20,12 @@ public class People {
     @SerializedName("biography")
     private String biography;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdMovie() {
+        return idMovie;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdMovie(Integer idMovie) {
+        this.idMovie = idMovie;
     }
 
     public String getName() {

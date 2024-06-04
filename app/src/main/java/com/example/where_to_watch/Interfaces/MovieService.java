@@ -2,6 +2,7 @@ package com.example.where_to_watch.Interfaces;
 
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;
+import com.example.where_to_watch.Models.WatchProviderResponse;
 import com.example.where_to_watch.Models.WatchProviders;
 import com.example.where_to_watch.Responses.MovieResponse;
 import retrofit2.Call;
@@ -18,5 +19,5 @@ public interface MovieService {
     @GET("movie/{movieID}/credits")
     Call<MovieResponse> getMoviesCredits(@Path("movieID")String movieID, @Query("api_key")String apiKey, @Query("language")String language);
     @GET("movie/{movieID}/watch/providers")
-    Call<WatchProviders> getWatchProviders(@Path("movieID")String movieID, @Query("api_key")String apiKey);
+    Call<WatchProviderResponse> getWatchProviders(@Path("movieID")String movieID, @Query("api_key")String apiKey);
 }

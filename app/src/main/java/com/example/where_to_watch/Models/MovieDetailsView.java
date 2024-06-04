@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +17,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.where_to_watch.Interfaces.MovieService;
+import com.example.where_to_watch.MainActivity;
 import com.example.where_to_watch.R;
 import com.example.where_to_watch.Responses.MovieResponse;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +41,7 @@ public class MovieDetailsView extends AppCompatActivity {
     TextView realsTV;
     TextView synospisTV;
     ImageView poster;
+    ListView listProviders;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -58,6 +63,7 @@ public class MovieDetailsView extends AppCompatActivity {
         realsTV = findViewById(R.id.realsTV);
         synospisTV = findViewById(R.id.movieSynopsisTV);
         poster = findViewById(R.id.poster);
+        listProviders = findViewById(R.id.listProviders);
 
         Intent intent = getIntent();
 
@@ -111,8 +117,6 @@ public class MovieDetailsView extends AppCompatActivity {
 
                                    // Récupère la list des realisateurs
                                    List<People> listReal = listCrew.stream().filter(people -> people.getWork().equals("Directing")).collect(Collectors.toList());
-                                   Integer nbReal = listReal.size();
-                                   topNb = nbReal >= 3 ? 3 : nbReal; //Ternaire qui retourne 3 si 3 ou plus de people sinon le nombre de people (c'est un if)
                                    realsTV.setText(listReal.get(0).getName());
 
                                 } else {
@@ -126,31 +130,43 @@ public class MovieDetailsView extends AppCompatActivity {
                             }
                         });
 
-                        Call<WatchProviders> callProviders = movieService.getWatchProviders(String.valueOf(movie.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d");
-                        callProviders.enqueue(new Callback<WatchProviders>() {
+                        Call<WatchProviderResponse> callProviders = movieService.getWatchProviders(String.valueOf(movie.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d");
+                        callProviders.enqueue(new Callback<WatchProviderResponse>() {
                             @Override
-                            public void onResponse(Call<WatchProviders> callProviders, Response<WatchProviders> responseProviders) {
-                                WatchProviders Providers = responseProviders.body();
+                            public void onResponse(Call<WatchProviderResponse> callProviders, Response<WatchProviderResponse> responseProviders) {
+                                if (responseProviders.isSuccessful()) {
+                                    WatchProviderResponse response = responseProviders.body();
+                                    if (response != null) {
+                                        // Supposons que vous voulez les providers pour le pays "FR"
+                                        CountryWatchProviders countryProviders = response.getResults().get("FR");
+                                        //if (countryProviders != null && countryProviders.getFlatrate() != null) {
+                                            //List<WatchProviders> providers = countryProviders.getFlatrate();
+                                            List<WatchProviders> providers = countryProviders.getBuy();
+                                            List<String> providersName = providers.stream().map(WatchProviders::getName).collect(Collectors.toList());
 
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName);
+                                            listProviders.setAdapter(adapter);
+                                        //}
+                                    }
+                                } else {
+                                    Log.e("MovieDetailsView", "Erreur dans la réponse des providers : " + responseProviders.errorBody());
+                                    Toast.makeText(MovieDetailsView.this, "Erreur dans la réponse des providers : " + responseProviders.message(), Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<WatchProviders> callProviders, Throwable t) {
-
+                            public void onFailure(Call<WatchProviderResponse> callProviders, Throwable t) {
+                                Log.e("MovieDetailsView", "Erreur lors de la récupération des providers : " + t.getMessage());
                             }
                         });
-
-                    } else {
-                        Log.e("MovieDetailsView", "Erreur dans la réponse des crédits : " + response.errorBody());
-                        Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
-                    }
                 }
+            }
+
                 @Override
                 public void onFailure(Call<Movie> call, Throwable t) {
                     System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
-                }
-            });
-            //Watch Providers
+                    }
+                });
         }
     }
 }
