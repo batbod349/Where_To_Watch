@@ -136,21 +136,19 @@ public class MovieDetailsView extends AppCompatActivity {
                             public void onResponse(Call<WatchProviderResponse> callProviders, Response<WatchProviderResponse> responseProviders) {
                                 if (responseProviders.isSuccessful()) {
                                     WatchProviderResponse response = responseProviders.body();
-                                    List<CountryWatchProviders> countryProviders = (List<CountryWatchProviders>) response.getWatchProviders();
-                                    List<WatchProviders> providers = countryProviders.get(0).getFlatrate();
+                                    if (response != null) {
+                                        // Supposons que vous voulez les providers pour le pays "FR"
+                                        CountryWatchProviders countryProviders = response.getResults().get("FR");
+                                        //if (countryProviders != null && countryProviders.getFlatrate() != null) {
+                                            //List<WatchProviders> providers = countryProviders.getFlatrate();
+                                            List<WatchProviders> providers = countryProviders.getBuy();
+                                            List<String> providersName = providers.stream().map(WatchProviders::getName).collect(Collectors.toList());
 
-                                    ArrayList<String> providersName = new ArrayList<>();
-                                    for (int i = 0; i < providers.size(); i++) {
-                                        providersName.add(providers.get(i).getName());
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName);
+                                            listProviders.setAdapter(adapter);
+                                        //}
                                     }
-
-                                    // Créer un ArrayAdapter pour gérer la liste de chaînes
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                                            MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName
-                                    );
-                                    listProviders.setAdapter(adapter);
-                                }
-                                else {
+                                } else {
                                     Log.e("MovieDetailsView", "Erreur dans la réponse des providers : " + responseProviders.errorBody());
                                     Toast.makeText(MovieDetailsView.this, "Erreur dans la réponse des providers : " + responseProviders.message(), Toast.LENGTH_SHORT).show();
                                 }
@@ -158,20 +156,17 @@ public class MovieDetailsView extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<WatchProviderResponse> callProviders, Throwable t) {
-                                System.out.println("Erreur lors de la récupération des providers : " + t.getMessage());
+                                Log.e("MovieDetailsView", "Erreur lors de la récupération des providers : " + t.getMessage());
                             }
                         });
-
-                    } else {
-                        Log.e("MovieDetailsView", "Erreur dans la réponse des crédits : " + response.errorBody());
-                        Toast.makeText(MovieDetailsView.this, "Réponse non successful", Toast.LENGTH_SHORT).show();
-                    }
                 }
+            }
+
                 @Override
                 public void onFailure(Call<Movie> call, Throwable t) {
                     System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
-                }
-            });
+                    }
+                });
         }
     }
 }

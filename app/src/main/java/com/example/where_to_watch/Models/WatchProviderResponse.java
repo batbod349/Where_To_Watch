@@ -1,34 +1,29 @@
 package com.example.where_to_watch.Models;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import java.util.Map;
 
 public class WatchProviderResponse {
+    @SerializedName("id")
+    private Integer id;
+
     @SerializedName("results")
-    private List<CountryWatchProviders> countryWatchProviders;
-    public List<CountryWatchProviders> getWatchProviders() { return countryWatchProviders; }
-}
-class CountryWatchProviders {
-    @SerializedName("link")
-    private String link;
+    private Map<String, CountryWatchProviders> results;
 
-    @SerializedName("flatrate")
-    private List<WatchProviders> flatrate;
-
-    public String getLink() {
-        return link;
+    public Integer getId() {
+        return id;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public List<WatchProviders> getFlatrate() {
-        return flatrate;
+    public Map<String, CountryWatchProviders> getResults() {
+        return results;
     }
 
-    public void setFlatrate(List<WatchProviders> flatrate) {
-        this.flatrate = flatrate;
+    public void setResults(Map<String, CountryWatchProviders> results) {
+        this.results = results;
     }
 }
+
