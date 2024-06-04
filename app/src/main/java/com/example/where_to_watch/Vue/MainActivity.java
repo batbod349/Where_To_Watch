@@ -1,4 +1,4 @@
-package com.example.where_to_watch;
+package com.example.where_to_watch.Vue;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.where_to_watch.Interfaces.MovieService;
-import com.example.where_to_watch.Models.PopularMovieView;
+import com.example.where_to_watch.R;
 
 public class MainActivity extends AppCompatActivity {
     Button getPopularMovieButt;

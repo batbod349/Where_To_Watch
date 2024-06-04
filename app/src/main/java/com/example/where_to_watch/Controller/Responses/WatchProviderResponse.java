@@ -1,5 +1,6 @@
-package com.example.where_to_watch.Models;
+package com.example.where_to_watch.Controller.Responses;
 
+import com.example.where_to_watch.Models.CountryWatchProviders;
 import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 
