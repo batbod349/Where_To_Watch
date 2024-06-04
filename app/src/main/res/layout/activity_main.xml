@@ -12,6 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Films populaires"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="64dp" />
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="65dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewGenre"
+        android:layout_width="240dp"
+        android:layout_height="729dp"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
