@@ -1,4 +1,4 @@
-package com.example.where_to_watch.Models;
+package com.example.where_to_watch.Controller;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,7 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.R;
+import com.example.where_to_watch.Vue.MovieDetailsView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.where_to_watch.Models;
+package com.example.where_to_watch.Controller;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

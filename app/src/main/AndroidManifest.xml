@@ -15,13 +15,13 @@
         android:theme="@style/Theme.Where_To_Watch"
         tools:targetApi="31">
         <activity
-            android:name=".Models.MovieDetailsView"
+            android:name=".Vue.MovieDetailsView"
             android:exported="false" />
         <activity
-            android:name=".Models.PopularMovieView"
+            android:name=".Vue.PopularMovieView"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Vue.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

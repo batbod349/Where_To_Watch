@@ -1,4 +1,4 @@
-package com.example.where_to_watch.Responses;
+package com.example.where_to_watch.Controller.Responses;
 
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;

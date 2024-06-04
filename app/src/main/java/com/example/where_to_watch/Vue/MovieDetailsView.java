@@ -1,4 +1,4 @@
-package com.example.where_to_watch.Models;
+package com.example.where_to_watch.Vue;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,9 +19,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.where_to_watch.Interfaces.MovieService;
-import com.example.where_to_watch.MainActivity;
+import com.example.where_to_watch.Models.CountryWatchProviders;
+import com.example.where_to_watch.Models.Genre;
+import com.example.where_to_watch.Models.Movie;
+import com.example.where_to_watch.Models.People;
+import com.example.where_to_watch.Controller.RetrofitClient;
+import com.example.where_to_watch.Controller.Responses.WatchProviderResponse;
+import com.example.where_to_watch.Models.WatchProviders;
 import com.example.where_to_watch.R;
-import com.example.where_to_watch.Responses.MovieResponse;
+import com.example.where_to_watch.Controller.Responses.MovieResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

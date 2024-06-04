@@ -1,10 +1,8 @@
 package com.example.where_to_watch.Interfaces;
 
 import com.example.where_to_watch.Models.Movie;
-import com.example.where_to_watch.Models.People;
-import com.example.where_to_watch.Models.WatchProviderResponse;
-import com.example.where_to_watch.Models.WatchProviders;
-import com.example.where_to_watch.Responses.MovieResponse;
+import com.example.where_to_watch.Controller.Responses.WatchProviderResponse;
+import com.example.where_to_watch.Controller.Responses.MovieResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
