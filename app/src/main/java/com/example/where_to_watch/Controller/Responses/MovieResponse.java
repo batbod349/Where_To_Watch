@@ -18,4 +18,5 @@ public class MovieResponse extends Movie {
     public List<Movie> getPopularMovies() {
         return movies;
     }
+    public List<Movie> getSearchResult() { return movies; }
 }

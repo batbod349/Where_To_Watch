@@ -1,5 +1,6 @@
 package com.example.where_to_watch.Vue;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,9 @@ import com.example.where_to_watch.R;
 
 public class MainActivity extends AppCompatActivity {
     Button getPopularMovieButt;
+    Button getSearch;
     public MovieService movieService;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +32,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getPopularMovieButt = findViewById(R.id.getPopularMovie);
+        getSearch = findViewById(R.id.getSearch);
         getPopularMovieButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Créer un Intent pour ouvrir AutreActivity
                 Intent intent = new Intent(MainActivity.this, PopularMovieView.class);
+                startActivity(intent);
+            }
+        });
+        getSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer un Intent pour ouvrir AutreActivity
+                Intent intent = new Intent(MainActivity.this, SearchView.class);
                 startActivity(intent);
             }
         });

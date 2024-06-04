@@ -18,4 +18,6 @@ public interface MovieService {
     Call<MovieResponse> getMoviesCredits(@Path("movieID")String movieID, @Query("api_key")String apiKey, @Query("language")String language);
     @GET("movie/{movieID}/watch/providers")
     Call<WatchProviderResponse> getWatchProviders(@Path("movieID")String movieID, @Query("api_key")String apiKey);
+    @GET("search/movie")
+    Call<MovieResponse> getSearchResults(@Query("query")String sQuery, @Query("api_key")String apiKey, @Query("language")String language);
 }

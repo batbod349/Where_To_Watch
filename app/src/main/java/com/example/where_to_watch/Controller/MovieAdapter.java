@@ -36,7 +36,7 @@ class MovieVH extends RecyclerView.ViewHolder{
         dateSortie = itemView.findViewById(R.id.dateSortieTV);
         synopsis = itemView.findViewById(R.id.synopsisTV);
         adult = itemView.findViewById(R.id.adultTV);
-        movieLayout = itemView.findViewById(R.id.movieLayout);
+        movieLayout = itemView.findViewById(R.id.cardLayout);
     }
 
     //Lie l'adaptateur au ViewHolder. Permet d'obtenir une référence à l'adaptateur dans le ViewHolder, ce qui peut être utile pour effectuer des actions sur l'adaptateur depuis le ViewHolder,
