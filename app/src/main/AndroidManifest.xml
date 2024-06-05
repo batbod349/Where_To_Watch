@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Where_To_Watch"
         tools:targetApi="31">
         <activity
+            android:name=".Vue.SearchView"
+            android:exported="false" />
+        <activity
             android:name=".Vue.MovieDetailsView"
             android:exported="false" />
         <activity

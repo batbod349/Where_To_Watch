@@ -31,7 +31,9 @@ import com.example.where_to_watch.Controller.Responses.MovieResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import retrofit2.Call;
@@ -219,11 +221,21 @@ public class MovieDetailsView extends AppCompatActivity {
     }
     private void updateListView(List<WatchProviders> providers, String defaultMessage) {
         List<String> providersName = new ArrayList<>();
+        Set<String> prefixes = new HashSet<>();
+
         if (providers == null || providers.isEmpty()) {
             providersName.add(defaultMessage);
         } else {
-            providersName = providers.stream().map(WatchProviders::getName).collect(Collectors.toList());
+            for (WatchProviders provider : providers) {
+                String name = provider.getName();
+                String prefix = name.length() >= 5 ? name.substring(0, 5) : name;
+                if (!prefixes.contains(prefix)) {
+                    prefixes.add(prefix);
+                    providersName.add(name);
+                }
+            }
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName);
         listProviders.setAdapter(adapter);
 
@@ -231,4 +243,5 @@ public class MovieDetailsView extends AppCompatActivity {
         rentBut.setVisibility(View.INVISIBLE);
         aboBut.setVisibility(View.INVISIBLE);
     }
+
 }
