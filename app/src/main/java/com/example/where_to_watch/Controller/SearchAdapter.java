@@ -106,17 +106,5 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchVH>{
     public int getItemCount() {
         return movies.size() + people.size();
     }
-    public class DateUtils {
-        public static String extractYear(String date) {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date parsedDate = sdf.parse(date);
-                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-                return yearFormat.format(parsedDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return "";
-            }
-        }
-    }
+
 }
