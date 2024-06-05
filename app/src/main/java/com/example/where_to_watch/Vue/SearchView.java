@@ -16,11 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.where_to_watch.Controller.MovieAdapter;
 import com.example.where_to_watch.Controller.Responses.MovieResponse;
+import com.example.where_to_watch.Controller.Responses.SearchResponse;
 import com.example.where_to_watch.Controller.RetrofitClient;
+import com.example.where_to_watch.Controller.SearchAdapter;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Movie;
+import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,9 +34,17 @@ import retrofit2.Retrofit;
 
 public class SearchView extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView movieRecyclerView;
+    private RecyclerView peopleRecyclerView;
     private Button searchBut;
     private EditText searchBar;
+    private Button movieToggleBut;
+    private Button peopleToggleBut;
+    private List<String> movieList = new ArrayList<>();
+    private List<String> personList = new ArrayList<>();
+
+    private SearchAdapter movieAdapter;
+    private SearchAdapter personAdapter;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +59,12 @@ public class SearchView extends AppCompatActivity {
 
         searchBut = findViewById(R.id.searchBut);
         searchBar = findViewById(R.id.searchBar);
-        recyclerView = findViewById(R.id.resultsRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        movieRecyclerView = findViewById(R.id.movieRecyclerView);
+        peopleRecyclerView = findViewById(R.id.peopleRecyclerView);
+        movieRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        peopleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        movieToggleBut = findViewById(R.id.movieToggleButton);
+        peopleToggleBut = findViewById(R.id.peopleToggleButton);
 
         // Créer une instance de MovieService en utilisant Retrofit
         Retrofit retrofit = RetrofitClient.getClient();
@@ -57,28 +73,36 @@ public class SearchView extends AppCompatActivity {
         searchBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<MovieResponse> call = movieService.getSearchResults(String.valueOf(searchBar.getText()),"d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
-                call.enqueue(new Callback<MovieResponse>() {
+                Call<SearchResponse> call = movieService.getSearchResults(String.valueOf(searchBar.getText()),"d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
+                call.enqueue(new Callback<SearchResponse>() {
                     @Override
-                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                         if (response.isSuccessful()) {
                             //Récupère le contenu de la réponse
-                            MovieResponse movieResponse = response.body();
-                            //Récupère les différents films contenu dans la réponse pour les ranger dans une List
-                            List<Movie> movies = movieResponse.getSearchResult();
+                            SearchResponse searchResponse = response.body();
+                            List<Object> results = searchResponse.getSearchResult();
+                            for (Object result : results) {
+                                if (result instanceof Movie) {
+                                    Movie movie = (Movie) result;
+                                    // Traitez le film ici
+                                } else if (result instanceof People) {
+                                    People people = (People) result;
+                                    // Traitez la personne ici
+                                }
+                            }
                             //Créer et initialise notre adapteur avec les films
-                            MovieAdapter adapter = new MovieAdapter(movies);
+                           // MovieAdapter adapter = new MovieAdapter(movies);
                             //Relie le recyclerView à l'adapter
-                            recyclerView.setAdapter(adapter);
+                           // recyclerView.setAdapter(adapter);
                             //Notifie l'adapter qu'il y a eu des ajouts
-                            adapter.notifyItemInserted(movies.size()-1);
+                           // adapter.notifyItemInserted(movies.size()-1);
                         }
                         else {
                             // Gérer les erreurs
                         }
                     }
                     @Override
-                    public void onFailure(Call<MovieResponse> call, Throwable t) {
+                    public void onFailure(Call<SearchResponse> call, Throwable t) {
 
                     }
                 });

@@ -23,6 +23,16 @@ public class Movie {
     private List<Genre> genres;
     @SerializedName("provider_name")
     private List<String> providers;
+    @SerializedName("media_type")
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public List<String> getProviders() {
         return providers;

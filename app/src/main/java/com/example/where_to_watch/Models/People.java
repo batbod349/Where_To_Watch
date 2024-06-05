@@ -2,6 +2,8 @@ package com.example.where_to_watch.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class People {
     @SerializedName("id")
     private Integer idMovie;
@@ -19,6 +21,26 @@ public class People {
     private String work;
     @SerializedName("biography")
     private String biography;
+    @SerializedName("media_type")
+    private String type;
+    @SerializedName("know_for")
+    private List<Movie> knowFor;
+
+    public List<Movie> getKnowFor() {
+        return knowFor;
+    }
+
+    public void setKnowFor(List<Movie> knowFor) {
+        this.knowFor = knowFor;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getIdMovie() {
         return idMovie;
