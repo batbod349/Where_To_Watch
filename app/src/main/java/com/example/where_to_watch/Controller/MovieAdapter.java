@@ -32,10 +32,10 @@ class MovieVH extends RecyclerView.ViewHolder{
         super(itemView);
         movieTitle = itemView.findViewById(R.id.movieTitleTV);
         imageView = itemView.findViewById(R.id.imageView);
-        duree = itemView.findViewById(R.id.dureeTV);
-        dateSortie = itemView.findViewById(R.id.dateSortieTV);
-        synopsis = itemView.findViewById(R.id.synopsisTV);
-        adult = itemView.findViewById(R.id.adultTV);
+        //duree = itemView.findViewById(R.id.dureeTV);
+        //dateSortie = itemView.findViewById(R.id.dateSortieTV);
+        //synopsis = itemView.findViewById(R.id.synopsisTV);
+        //adult = itemView.findViewById(R.id.adultTV);
         movieLayout = itemView.findViewById(R.id.cardLayout);
     }
 
@@ -67,25 +67,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieVH>{
     //Remplit les données de l'élément de vue représenté par le ViewHolder à la position spécifiée.
     @Override
     public void onBindViewHolder(@NonNull MovieVH holder, int position) {
-
         holder.movieTitle.setText(movies.get(position).getTitle());
         Picasso.get().load("https://image.tmdb.org/t/p/w500" + movies.get(position).getPosterPath()).into(holder.imageView);
-        holder.dateSortie.setText(movies.get(position).getDateSortie());
-        holder.duree.setText(String.valueOf(movies.get(position).getDuree()));
-        holder.synopsis.setText(movies.get(position).getSynopsis());
-        holder.adult.setText(String.valueOf(movies.get(position).getAdult()));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 int movieposition = holder.getAdapterPosition(); // Obtenez la position actuelle
                 if (movieposition != RecyclerView.NO_POSITION) { // Vérifiez si l'élément existe toujours
                     Intent intent = new Intent(v.getContext(), MovieDetailsView.class);
-                    intent.putExtra("movieID",String.valueOf(movies.get(movieposition).getId()));
+                    intent.putExtra("movieID", String.valueOf(movies.get(movieposition).getId()));
                     v.getContext().startActivity(intent);
                 }
             }
         });
     }
+
 
     //Retourne le nombre total d'éléments dans la liste de films.
     @Override
