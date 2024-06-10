@@ -18,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.where_to_watch.Controller.Responses.PersonResponse;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.CountryWatchProviders;
 import com.example.where_to_watch.Models.Genre;
@@ -113,14 +114,14 @@ public class MovieDetailsView extends AppCompatActivity {
                         genreTV.setText(genre);
 
                         // Récupération des crédits du film //
-                        Call<MovieResponse> callCredits = movieService.getMoviesCredits(String.valueOf(movie.getId()), "d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
-                        callCredits.enqueue(new Callback<MovieResponse>() {
+                        Call<PersonResponse> callCredits = movieService.getMoviesCredits(String.valueOf(movie.getId()), "d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
+                        callCredits.enqueue(new Callback<PersonResponse>() {
                             @Override
-                            public void onResponse(Call<MovieResponse> callCredits, Response<MovieResponse> responseCredit) {
+                            public void onResponse(Call<PersonResponse> callCredits, Response<PersonResponse> responseCredit) {
                                 if (responseCredit.isSuccessful()) {
-                                    MovieResponse movieResponse = responseCredit.body();
-                                    List<People> listActeurs = movieResponse.getMovieActeurs();
-                                    List<People> listCrew = movieResponse.getMovieCrew();
+                                    PersonResponse peopleResponse = responseCredit.body();
+                                    List<People> listActeurs = peopleResponse.getMovieActeurs();
+                                    List<People> listCrew = peopleResponse.getMovieCrew();
 
                                     // Récupère la liste des acteurs
                                     Integer nbActeur = listActeurs.size();
@@ -149,7 +150,7 @@ public class MovieDetailsView extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<MovieResponse> callCredits, Throwable t) {
+                            public void onFailure(Call<PersonResponse> callCredits, Throwable t) {
                                 System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
                             }
                         });

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class People {
     @SerializedName("id")
-    private Integer idMovie;
+    private Integer id;
     @SerializedName("name")
     private String name;
     @SerializedName("gender")
@@ -23,15 +23,15 @@ public class People {
     private String biography;
     @SerializedName("media_type")
     private String type;
-    @SerializedName("know_for")
-    private List<Movie> knowFor;
+    @SerializedName("known_for")
+    private List<Movie> knownFor;
 
-    public List<Movie> getKnowFor() {
-        return knowFor;
+    public List<Movie> getKnownFor() {
+        return knownFor;
     }
 
-    public void setKnowFor(List<Movie> knowFor) {
-        this.knowFor = knowFor;
+    public void setKnownFor(List<Movie> knownFor) {
+        this.knownFor = knownFor;
     }
 
     public String getType() {
@@ -42,12 +42,12 @@ public class People {
         this.type = type;
     }
 
-    public Integer getIdMovie() {
-        return idMovie;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdMovie(Integer idMovie) {
-        this.idMovie = idMovie;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

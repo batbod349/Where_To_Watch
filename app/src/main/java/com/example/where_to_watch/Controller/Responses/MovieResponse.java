@@ -9,13 +9,9 @@ public class MovieResponse extends Movie {
     //Récupère la réponse de l'API à partir de la balise 'results'
     @SerializedName("results")
     private List<Movie> movies;
-    @SerializedName("cast")
-    private List<People> acteurs;
-    @SerializedName("crew")
-    private List<People> ekip;
-    public List<People> getMovieCrew() { return ekip; }
-    public List<People> getMovieActeurs() { return acteurs; }
+
     public List<Movie> getPopularMovies() {
         return movies;
     }
+    public List<Movie> getSearchMovieResult() { return movies; }
 }
