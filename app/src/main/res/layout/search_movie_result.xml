@@ -2,12 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingStart="20px"
+    android:paddingLeft="20px"
+    android:paddingTop="20px"
+    android:paddingEnd="20px"
+    android:paddingRight="20px"
+    android:paddingBottom="20px">
 
     <LinearLayout
         android:id="@+id/searchMovieLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#CEDDDE"
+        android:backgroundTint="#CEDDDE"
         android:orientation="horizontal"
         android:paddingStart="50px"
         android:paddingTop="10px"
@@ -33,7 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Title" />
+                android:text="Title"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -45,20 +54,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Year" />
+                    android:text="Year"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text=" • " />
+                    android:text=" • "
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/searchTypeMovie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Media Type" />
+                    android:text="Media Type"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>
