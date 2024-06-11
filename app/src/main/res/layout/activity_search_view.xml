@@ -63,15 +63,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movieRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginBottom="8dp"
-            android:scrollbars="none" />
-
-        <Button
-            android:id="@+id/movieToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voir plus" />
+            android:orientation="horizontal"
+            android:scrollbars="horizontal" />
 
         <TextView
             android:id="@+id/peopleListTitle"
@@ -86,15 +81,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/peopleRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginBottom="8dp"
-            android:maxHeight="300dp"
-            android:scrollbars="none" />
+            android:orientation="horizontal"
+            android:scrollbars="horizontal"  />
 
-        <Button
-            android:id="@+id/peopleToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voir plus" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

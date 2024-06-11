@@ -7,6 +7,8 @@ import java.util.List;
 public class Movie {
     @SerializedName("title")
     private String title;
+    @SerializedName("name")
+    private String name;
     @SerializedName("id")
     private int id;
     @SerializedName("poster_path")
@@ -28,6 +30,14 @@ public class Movie {
 
     public String getType() {
         return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setType(String type) {

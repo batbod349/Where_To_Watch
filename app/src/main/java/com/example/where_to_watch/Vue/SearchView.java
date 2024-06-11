@@ -91,6 +91,7 @@ public class SearchView extends AppCompatActivity {
 
                     }
                 });
+
                 Call<PersonResponse> callPerson = movieService.getSearchPersonResults(String.valueOf(searchBar.getText()),"d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
                 callPerson.enqueue(new Callback<PersonResponse>() {
                     @Override

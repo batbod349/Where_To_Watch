@@ -1,8 +1,11 @@
 package com.example.where_to_watch.Vue;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +20,9 @@ import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +32,9 @@ public class PersonDetailsView extends AppCompatActivity {
     TextView personName;
     TextView personBio;
     ImageView personImage;
+    ListView knownForList;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +49,7 @@ public class PersonDetailsView extends AppCompatActivity {
         personName = findViewById(R.id.personName);
         personBio = findViewById(R.id.personBio);
         personImage = findViewById(R.id.personImage);
+        knownForList = findViewById(R.id.knownForList);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -59,8 +68,22 @@ public class PersonDetailsView extends AppCompatActivity {
                     personName.setText(person.getName());
                     personBio.setText(person.getBiography());
                     Picasso.get().load("https://image.tmdb.org/t/p/w500" + person.getProfileImg()).into(personImage);
-                }
 
+                    List<String> cinematographie = new ArrayList<>();
+                    if (person.getKnownFor() == null){
+                        cinematographie.add("N'a pas de film de référence");
+                    } else {
+                        for(int i = 0 ; i< person.getKnownFor().size(); i++){
+                            String title = person.getKnownFor().get(i).getTitle();
+                            if(title == null){
+                                title = person.getKnownFor().get(i).getName();
+                            }
+                            cinematographie.add(title);
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(PersonDetailsView.this, android.R.layout.simple_list_item_1, cinematographie);
+                    knownForList.setAdapter(adapter);
+                }
                 @Override
                 public void onFailure(Call<People> call, Throwable t) {
 
