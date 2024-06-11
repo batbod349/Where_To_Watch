@@ -75,9 +75,6 @@ public class PersonDetailsView extends AppCompatActivity {
                     } else {
                         for(int i = 0 ; i< person.getKnownFor().size(); i++){
                             String title = person.getKnownFor().get(i).getTitle();
-                            if(title == null){
-                                title = person.getKnownFor().get(i).getName();
-                            }
                             cinematographie.add(title);
                         }
                     }
