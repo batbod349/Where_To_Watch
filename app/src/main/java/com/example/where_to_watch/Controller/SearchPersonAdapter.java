@@ -70,7 +70,8 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonVH>{
                 int personposition = holder.getAdapterPosition(); // Obtenez la position actuelle
                 if (personposition != RecyclerView.NO_POSITION) { // Vérifiez si l'élément existe toujours
                     Intent intent = new Intent(v.getContext(), PersonDetailsView.class);
-                    intent.putExtra("personID",String.valueOf(peoples.get(personposition).getId()));
+                    People selectedPerson = peoples.get(personposition);
+                    intent.putExtra("selectedPerson", selectedPerson);
                     v.getContext().startActivity(intent);
                 }
             }
