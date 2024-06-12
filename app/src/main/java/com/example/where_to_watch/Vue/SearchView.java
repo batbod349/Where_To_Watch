@@ -26,6 +26,7 @@ import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.R;
+import com.squareup.picasso.BuildConfig;
 
 import java.util.List;
 
