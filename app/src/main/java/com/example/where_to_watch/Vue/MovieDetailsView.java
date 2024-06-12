@@ -44,6 +44,7 @@ import retrofit2.Retrofit;
 
 public class MovieDetailsView extends AppCompatActivity {
 
+    // Déclaration des variables globales
     TextView titleTV;
     TextView dureeTV;
     TextView dateSortieTV;
@@ -56,7 +57,11 @@ public class MovieDetailsView extends AppCompatActivity {
     Button aboBut;
     Button rentBut;
     Button buyBut;
+    Button backproviderButt;
 
+    // Déclaration de la liste et de l'adaptateur globalement
+    private List<String> providersName = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,22 @@ public class MovieDetailsView extends AppCompatActivity {
         aboBut = findViewById(R.id.aboBut);
         rentBut = findViewById(R.id.rentBut);
         buyBut = findViewById(R.id.buyBut);
+        backproviderButt = findViewById(R.id.backProvidersButt);
+
+        // Initialisation de l'adaptateur
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, providersName);
+        listProviders.setAdapter(adapter);
+
+        backproviderButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listProviders.setVisibility(View.INVISIBLE);
+                buyBut.setVisibility(View.VISIBLE);
+                aboBut.setVisibility(View.VISIBLE);
+                rentBut.setVisibility(View.VISIBLE);
+                updateListView(null, "", true);
+            }
+        });
 
         Intent intent = getIntent();
 
@@ -175,21 +196,24 @@ public class MovieDetailsView extends AppCompatActivity {
                                             buyBut.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    updateListView(countryProviders.getBuy(), "\nCe film n'est pas disponible à l'achat");
+                                                    updateListView(countryProviders.getBuy(), "\nCe film n'est pas disponible à l'achat",false);
+                                                    backproviderButt.setVisibility(View.VISIBLE);
                                                 }
                                             });
 
                                             rentBut.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    updateListView(countryProviders.getRent(), "\nCe film n'est pas disponible à la location");
+                                                    updateListView(countryProviders.getRent(), "\nCe film n'est pas disponible à la location",false);
+                                                    backproviderButt.setVisibility(View.VISIBLE);
                                                 }
                                             });
 
                                             aboBut.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    updateListView(countryProviders.getFlatrate(), "\nCe film n'est pas disponible via un abonnement");
+                                                    updateListView(countryProviders.getFlatrate(), "\nCe film n'est pas disponible via un abonnement",false);
+                                                    backproviderButt.setVisibility(View.VISIBLE);
                                                 }
                                             });
                                         }
@@ -211,38 +235,40 @@ public class MovieDetailsView extends AppCompatActivity {
                         });
 
                     }
-            }
+                }
 
                 @Override
                 public void onFailure(Call<Movie> call, Throwable t) {
                     System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
-                    }
-                });
+                }
+            });
         }
     }
-    private void updateListView(List<WatchProviders> providers, String defaultMessage) {
-        List<String> providersName = new ArrayList<>();
-        Set<String> prefixes = new HashSet<>();
 
-        if (providers == null || providers.isEmpty()) {
-            providersName.add(defaultMessage);
-        } else {
-            for (WatchProviders provider : providers) {
-                String name = provider.getName();
-                String prefix = name.length() >= 5 ? name.substring(0, 5) : name;
-                if (!prefixes.contains(prefix)) {
-                    prefixes.add(prefix);
-                    providersName.add(name);
+    private void updateListView(List<WatchProviders> providers, String defaultMessage, boolean clearAll) {
+        providersName.clear(); // Vider la liste existante
+
+        if (!clearAll) {
+            if (providers == null || providers.isEmpty()) {
+                providersName.add(defaultMessage);
+            } else {
+                Set<String> prefixes = new HashSet<>();
+                for (WatchProviders provider : providers) {
+                    String name = provider.getName();
+                    String prefix = name.length() >= 5 ? name.substring(0, 5) : name;
+                    if (!prefixes.contains(prefix)) {
+                        prefixes.add(prefix);
+                        providersName.add(name);
+                    }
                 }
             }
+            buyBut.setVisibility(View.INVISIBLE);
+            rentBut.setVisibility(View.INVISIBLE);
+            aboBut.setVisibility(View.INVISIBLE);
+            listProviders.setVisibility(View.VISIBLE); // Assurez-vous que la ListView est visible
+        } else {
+            listProviders.setVisibility(View.INVISIBLE);
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(MovieDetailsView.this, android.R.layout.simple_list_item_1, providersName);
-        listProviders.setAdapter(adapter);
-
-        buyBut.setVisibility(View.INVISIBLE);
-        rentBut.setVisibility(View.INVISIBLE);
-        aboBut.setVisibility(View.INVISIBLE);
+        adapter.notifyDataSetChanged(); // Notifier l'adaptateur des changements
     }
-
 }

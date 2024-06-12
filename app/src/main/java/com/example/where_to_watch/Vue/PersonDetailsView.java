@@ -3,10 +3,13 @@ package com.example.where_to_watch.Vue;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +36,7 @@ public class PersonDetailsView extends AppCompatActivity {
     TextView personBio;
     ImageView personImage;
     ListView knownForList;
+    List<Integer> movieIds = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -65,20 +69,43 @@ public class PersonDetailsView extends AppCompatActivity {
             } else {
                 for(int i = 0 ; i< person.getKnownFor().size(); i++){
                     String title = person.getKnownFor().get(i).getTitle();
+                    int movieId = person.getKnownFor().get(i).getId();
                     cinematographie.add(title);
+                    movieIds.add(movieId);
                 }
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(PersonDetailsView.this, android.R.layout.simple_list_item_1, cinematographie);
             knownForList.setAdapter(adapter);
+
+            knownForList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedItem = (String) parent.getItemAtPosition(position);
+                    int selectedMovieId = movieIds.get(position);
+
+                    // Logique pour gérer le clic sur l'élément
+                    if (selectedMovieId != -1) {
+                        // Afficher un toast ou démarrer une nouvelle activité
+                        Toast.makeText(PersonDetailsView.this, "Vous avez cliqué sur : " + selectedItem + " avec ID: " + selectedMovieId, Toast.LENGTH_SHORT).show();
+
+                        // Ouvrir une nouvelle activité avec des détails du film
+                        Intent intent = new Intent(PersonDetailsView.this, MovieDetailsView.class);
+                        intent.putExtra("movieID", String.valueOf(selectedMovieId));
+                        startActivity(intent);
+                    }
+                }
+            });
 
             Call<People> call = movieService.getPeopleDetails(String.valueOf(person.getId()),"d85ec7da27477ca0d57dfd8ffd9fd94d","fr-FR");
             call.enqueue(new Callback<People>() {
                 @Override
                 public void onResponse(Call<People> call, Response<People> response) {
                     People person = response.body();
-                    personName.setText(person.getName());
-                    personBio.setText(person.getBiography());
-                    Picasso.get().load("https://image.tmdb.org/t/p/w500" + person.getProfileImg()).into(personImage);
+                    if(person.getBiography() != ""){
+                        personName.setText(person.getName());
+                        personBio.setText(person.getBiography());
+                        Picasso.get().load("https://image.tmdb.org/t/p/w500" + person.getProfileImg()).into(personImage);
+                    }
                 }
                 @Override
                 public void onFailure(Call<People> call, Throwable t) {
