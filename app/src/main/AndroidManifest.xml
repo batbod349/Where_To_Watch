@@ -21,6 +21,9 @@
             android:name=".Models.PopularMovieView"
             android:exported="false" />
         <activity
+            android:name=".Models.GenreView"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

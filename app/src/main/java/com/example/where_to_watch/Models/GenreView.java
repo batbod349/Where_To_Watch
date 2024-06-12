@@ -1,20 +1,19 @@
 package com.example.where_to_watch.Models;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.where_to_watch.Interfaces.MovieService;
-import com.example.where_to_watch.MainActivity;
 import com.example.where_to_watch.R;
-import com.example.where_to_watch.Responses.MovieResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,37 +23,35 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class GenreView extends AppCompatActivity  {
+public class GenreView extends AppCompatActivity {
 
     private ListView listView;
+    private List<String> genreList = new ArrayList<>();
 
+    @SuppressLint("MissingInflatedId")
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setContentView(R.layout.activity_menu_view);
 
         listView = findViewById(R.id.listGenre);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Retrofit retrofit = RetrofitClient.getClient();
         MovieService movieService = retrofit.create(MovieService.class);
 
-        Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
+        Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "en");
 
         call.enqueue(new Callback<Genre>() {
             @Override
             public void onResponse(Call<Genre> call, Response<Genre> response) {
                 if (response.isSuccessful()) {
-                    List<String> genreList = new ArrayList<>();
                     List<Genre> genres = response.body().getGenres();
 
-                    for (int i = 0; i < genres.size(); i++) {
-                        genreList.add(genres.get(i).getName());
+                    for (Genre genre : genres) {
+                        genreList.add(genre.getName());
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -63,19 +60,24 @@ public class GenreView extends AppCompatActivity  {
                             genreList
                     );
                     listView.setAdapter(adapter);
-                } else {
 
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String genre = genreList.get(position);
+                            Toast.makeText(GenreView.this, "Genre selected: " + genre, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+                    Log.e("GenreView", "Response not successful: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<Genre> call, Throwable t) {
-
+                Log.e("GenreView", "Network call failed", t);
             }
         });
-
-
-
     }
-
 }
