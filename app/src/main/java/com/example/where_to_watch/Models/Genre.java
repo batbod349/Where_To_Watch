@@ -15,7 +15,7 @@ public class Genre implements Parcelable {
     @SerializedName("genres")
     private List<Genre> Genres;
     public Integer getId() {
-        return id;
+        return idMovie;
     }
 
     // Constructor for Parcelable

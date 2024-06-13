@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Genre;
-import com.example.where_to_watch.Models.RetrofitClient;
+import com.example.where_to_watch.Controller.RetrofitClient;
 import com.example.where_to_watch.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,6 +37,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     Button getPopularMovieButt;
     Button getSearch;
+    Button getPopularPersonButt;
     private DrawerLayout drawerLayout;
     private ListView listView;
     public MovieService movieService;
@@ -48,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         drawerLayout = findViewById(R.id.drawerlayout);
 
@@ -103,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
                 
+        getPopularPersonButt =findViewById(R.id.getPopularPeople);
         getPopularMovieButt = findViewById(R.id.getPopularMovie);
         getSearch = findViewById(R.id.getSearch);
         getPopularMovieButt.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Créer un Intent pour ouvrir AutreActivity
                 Intent intent = new Intent(MainActivity.this, PopularMovieView.class);
+                startActivity(intent);
+            }
+        });
+        getPopularPersonButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer un Intent pour ouvrir AutreActivity
+                Intent intent = new Intent(MainActivity.this, PopularPeopleView.class);
                 startActivity(intent);
             }
         });

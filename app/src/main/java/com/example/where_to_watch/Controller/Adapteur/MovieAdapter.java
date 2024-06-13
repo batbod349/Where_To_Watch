@@ -1,4 +1,4 @@
-    package com.example.where_to_watch.Controller;
+    package com.example.where_to_watch.Controller.Adapteur;
 
     import android.content.Intent;
     import android.view.LayoutInflater;
@@ -16,56 +16,58 @@
     import com.squareup.picasso.Picasso;
     import java.util.List;
 
-    class SearchMovieVH extends RecyclerView.ViewHolder{
+    class MovieVH extends RecyclerView.ViewHolder{
 
         TextView movieTitle;
         ImageView imageView;
         TextView dateSortie;
-        TextView movieType;
-        private SearchMovieAdapter adapter;
+        TextView synopsis;
+        private LinearLayout movieLayout;
+        private MovieAdapter adapter;
 
         //Prend une vue (itemView) en paramètre et initialise le ViewHolder avec cette vue. Il initialise également les vues (comme TextView) à l'intérieur de l'élément de vue.
-        public SearchMovieVH(@NonNull View itemView) {
+        public MovieVH(@NonNull View itemView) {
             super(itemView);
-            movieTitle = itemView.findViewById(R.id.searchTitleMovie);
-            imageView = itemView.findViewById(R.id.searchPosterMovie);
-            dateSortie = itemView.findViewById(R.id.searchYearMovie);
-            movieType = itemView.findViewById(R.id.searchTypeMovie);
+            movieTitle = itemView.findViewById(R.id.movieTitleTV);
+            imageView = itemView.findViewById(R.id.imageView);
+            dateSortie = itemView.findViewById(R.id.dateSortieTV);
+            synopsis = itemView.findViewById(R.id.synopsisTV);
+            movieLayout = itemView.findViewById(R.id.cardLayout);
         }
 
         //Lie l'adaptateur au ViewHolder. Permet d'obtenir une référence à l'adaptateur dans le ViewHolder, ce qui peut être utile pour effectuer des actions sur l'adaptateur depuis le ViewHolder,
-        public SearchMovieVH linkAdapter(SearchMovieAdapter adapter){
+        public MovieVH linkAdapter(MovieAdapter adapter){
             this.adapter = adapter;
             return this;
         }
 
     }
 
-    public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieVH>{
+    public class MovieAdapter extends RecyclerView.Adapter<MovieVH>{
 
         List<Movie> movies;
         //Prend une liste de films en paramètre et initialise l'adaptateur avec cette liste.
-        public SearchMovieAdapter(List<Movie> items) {
+        public MovieAdapter(List<Movie> items) {
             this.movies = items;
         }
 
-        //Crée et retourne une instance de SearchVH qui représente un élément de vue individuel.
+        //Crée et retourne une instance de MovieVH qui représente un élément de vue individuel.
         @NonNull
         @Override
-        public SearchMovieVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public MovieVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.search_movie_result, parent, false);
-            return new SearchMovieVH(view).linkAdapter(this);
+                    .inflate(R.layout.item_movie, parent, false);
+            return new MovieVH(view).linkAdapter(this);
         }
 
         //Remplit les données de l'élément de vue représenté par le ViewHolder à la position spécifiée.
         @Override
-        public void onBindViewHolder(@NonNull SearchMovieVH holder, int position) {
+        public void onBindViewHolder(@NonNull MovieVH holder, int position) {
 
             holder.movieTitle.setText(movies.get(position).getTitle());
-            holder.dateSortie.setText(movies.get(position).getDateSortie());
-            holder.movieType.setText(movies.get(position).getType());
             Picasso.get().load("https://image.tmdb.org/t/p/w500" + movies.get(position).getPosterPath()).into(holder.imageView);
+            holder.dateSortie.setText(movies.get(position).getDateSortie());
+            holder.synopsis.setText(movies.get(position).getSynopsis());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){

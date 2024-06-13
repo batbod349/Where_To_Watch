@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espacement pour les éléments de la grille -->
+    <dimen name="grid_spacing">5dp</dimen>
+</resources>

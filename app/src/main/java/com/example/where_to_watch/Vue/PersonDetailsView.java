@@ -85,9 +85,6 @@ public class PersonDetailsView extends AppCompatActivity {
 
                     // Logique pour gérer le clic sur l'élément
                     if (selectedMovieId != -1) {
-                        // Afficher un toast ou démarrer une nouvelle activité
-                        Toast.makeText(PersonDetailsView.this, "Vous avez cliqué sur : " + selectedItem + " avec ID: " + selectedMovieId, Toast.LENGTH_SHORT).show();
-
                         // Ouvrir une nouvelle activité avec des détails du film
                         Intent intent = new Intent(PersonDetailsView.this, MovieDetailsView.class);
                         intent.putExtra("movieID", String.valueOf(selectedMovieId));
