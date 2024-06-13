@@ -21,7 +21,7 @@
             android:layout_width="100dp"
             android:layout_height="88dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/logo" />
+            android:src="@drawable/titrewheretowatch" />
 
         <EditText
             android:id="@+id/search_bar"
@@ -63,29 +63,33 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="#000000"
                 android:text="Séries"
-                android:background="?attr/selectableItemBackground"
                 android:textColor="#FFFFFF" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="#007FA9"
                 android:text="Films"
-                android:background="?attr/selectableItemBackground"
                 android:textColor="#FFFFFF" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Acteurs"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="#000000"
                 android:textColor="#FFFFFF" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Réalisateurs"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="#000000"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
     </HorizontalScrollView>
@@ -130,13 +134,7 @@
             android:orientation="horizontal"
             android:scrollbars="horizontal" />
     </LinearLayout>
-    <!-- Inclure le footer -->
-    <include
-        android:id="@+id/footer"
-        layout="@layout/footer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <!-- Bottom Navigation -->
     <LinearLayout
