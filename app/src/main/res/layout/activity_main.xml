@@ -16,6 +16,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         <!-- Contenu principal de l'activité -->
         <FrameLayout
             android:id="@+id/content_frame"
@@ -42,7 +43,8 @@
                 android:id="@+id/listGenre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start"
+                android:layout_marginTop="?attr/actionBarSize"/>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
