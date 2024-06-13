@@ -30,4 +30,8 @@ public interface MovieService {
     Call<PersonResponse> getSearchPersonResults(@Query("query")String sQuery, @Query("api_key")String apiKey, @Query("language")String language);
     @GET("person/{personID}")
     Call<People> getPeopleDetails(@Path("personID")String personID, @Query("api_key")String apiKey, @Query("language")String language);
+    @GET("person/popular")
+    Call<PersonResponse> getPopularPeople(@Query("api_key")String apiKey,@Query("lanquage")String language);
+    @GET("person/{personID}/movie_credits")
+    Call<MovieResponse> getCinematographie(@Path("personID")String movieID, @Query("api_key")String apiKey, @Query("language")String language);
 }

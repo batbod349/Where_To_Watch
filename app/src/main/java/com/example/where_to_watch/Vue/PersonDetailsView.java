@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.where_to_watch.Controller.RetrofitClient;
 import com.example.where_to_watch.Interfaces.MovieService;
@@ -36,6 +38,7 @@ public class PersonDetailsView extends AppCompatActivity {
     TextView personBio;
     ImageView personImage;
     ListView knownForList;
+    Button voirCinematographie;
     List<Integer> movieIds = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
@@ -54,6 +57,7 @@ public class PersonDetailsView extends AppCompatActivity {
         personBio = findViewById(R.id.personBio);
         personImage = findViewById(R.id.personImage);
         knownForList = findViewById(R.id.knownForList);
+        voirCinematographie = findViewById(R.id.voirCinematographie);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("selectedPerson")) {
@@ -85,9 +89,6 @@ public class PersonDetailsView extends AppCompatActivity {
 
                     // Logique pour gérer le clic sur l'élément
                     if (selectedMovieId != -1) {
-                        // Afficher un toast ou démarrer une nouvelle activité
-                        Toast.makeText(PersonDetailsView.this, "Vous avez cliqué sur : " + selectedItem + " avec ID: " + selectedMovieId, Toast.LENGTH_SHORT).show();
-
                         // Ouvrir une nouvelle activité avec des détails du film
                         Intent intent = new Intent(PersonDetailsView.this, MovieDetailsView.class);
                         intent.putExtra("movieID", String.valueOf(selectedMovieId));
@@ -112,10 +113,14 @@ public class PersonDetailsView extends AppCompatActivity {
 
                 }
             });
-
+            voirCinematographie.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), CinematographieView.class);
+                        intent.putExtra("selectedPerson", person);
+                        v.getContext().startActivity(intent);
+                }
+            });
         }
-
-
     }
-
 }
