@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Vue.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,5 +47,25 @@
                 android:layout_gravity="start"
                 android:layout_marginTop="?attr/actionBarSize"/>
         </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
+
+         <Button
+        android:id="@+id/getPopularMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Films populaires"
+        app:layout_constraintBottom_toTopOf="@+id/getSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/getSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
+

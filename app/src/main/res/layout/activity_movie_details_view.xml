@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Models.MovieDetailsView">
+    tools:context=".Vue.MovieDetailsView">
 
     <TextView
         android:id="@+id/TitleTV"
@@ -57,16 +57,90 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="Disponibilités"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/backProvidersButt"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#007FA9"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingLeft="13dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="15dp"
+                    android:text="&lt;"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-black"
+                    android:paddingLeft="15dp"
+                    android:text="Disponibilités"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/listProviders"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:textAlignment="center">
+
+                    <Button
+                        android:id="@+id/aboBut"
+                        android:layout_width="172dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#007FA9"
+                        android:fontFamily="@font/poppins_medium"
+                        android:letterSpacing="0.05"
+                        android:text="Abonnement"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/buyBut"
+                        android:layout_width="172dp"
+                        android:layout_height="50dp"
+                        android:backgroundTint="#007FA9"
+                        android:fontFamily="@font/poppins_medium"
+                        android:letterSpacing="0.05"
+                        android:text="Acheter"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/rentBut"
+                        android:layout_width="172dp"
+                        android:layout_height="50dp"
+                        android:backgroundTint="#007FA9"
+                        android:fontFamily="@font/poppins_medium"
+                        android:letterSpacing="0.05"
+                        android:text="Louer"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </FrameLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -129,7 +203,7 @@
         <TextView
             android:id="@+id/acteursTV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -148,9 +222,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="16dp"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">

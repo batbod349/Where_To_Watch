@@ -1,5 +1,7 @@
-package com.example.where_to_watch;
+package com.example.where_to_watch.Vue;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,9 +34,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    Button getPopularMovieButt;
+    Button getSearch;
     private DrawerLayout drawerLayout;
     private ListView listView;
+    public MovieService movieService;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "en");
 
         call.enqueue(new Callback<Genre>() {
+
             @Override
             public void onResponse(Call<Genre> call, Response<Genre> response) {
                 if (response.isSuccessful()) {
@@ -93,6 +100,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Genre> call, Throwable t) {
                 Log.e("MainActivity", "Network call failed", t);
+            }
+        });
+                
+        getPopularMovieButt = findViewById(R.id.getPopularMovie);
+        getSearch = findViewById(R.id.getSearch);
+        getPopularMovieButt.setOnClickListener(new View.OnClickListener() {
+        @Override
+            public void onClick(View v) {
+                // Créer un Intent pour ouvrir AutreActivity
+                Intent intent = new Intent(MainActivity.this, PopularMovieView.class);
+                startActivity(intent);
+            }
+        });
+        getSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer un Intent pour ouvrir AutreActivity
+                Intent intent = new Intent(MainActivity.this, SearchView.class);
+                startActivity(intent);
             }
         });
     }
