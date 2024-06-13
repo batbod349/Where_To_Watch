@@ -10,8 +10,6 @@ import java.util.List;
 public class Movie implements Parcelable {
     @SerializedName("title")
     private String title;
-    @SerializedName("name")
-    private String name;
     @SerializedName("id")
     private int id;
     @SerializedName("poster_path")
@@ -37,7 +35,6 @@ public class Movie implements Parcelable {
     // Constructeur utilisé par Parcelable
     protected Movie(Parcel in) {
         title = in.readString();
-        name = in.readString();
         id = in.readInt();
         posterPath = in.readString();
         duree = in.readString();
@@ -53,7 +50,6 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
-        dest.writeString(name);
         dest.writeInt(id);
         dest.writeString(posterPath);
         dest.writeString(duree);
@@ -85,14 +81,6 @@ public class Movie implements Parcelable {
     // Méthodes getter et setter
     public String getType() {
         return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setType(String type) {
