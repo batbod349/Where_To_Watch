@@ -10,58 +10,106 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <!-- Contenu principal de l'activité -->
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="137dp"
             android:background="#007FA9"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-            <Button
-                android:id="@+id/getPopularPeople"
+            <LinearLayout
+                android:id="@+id/headerLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/toolbar"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="9dp"
-                android:backgroundTint="#00334A"
-                android:text="Personnes"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toTopOf="@+id/getSearch" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/getPopularMovie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/toolbar"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="9dp"
-                android:backgroundTint="#00334A"
-                android:text="Films"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toTopOf="@+id/getSearch" />
+                <RelativeLayout
+                    android:id="@+id/header"
+                    android:layout_width="410dp"
+                    android:layout_height="79dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/getSearch"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/toolbar"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="9dp"
-                android:backgroundTint="#00334A"
-                app:icon="@android:drawable/ic_menu_search"
-                app:iconTint="#FFFFFF" />
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="100dp"
+                        android:layout_height="88dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/titrewheretowatch" />
+
+                    <EditText
+                        android:id="@+id/search_bar"
+                        android:layout_width="271dp"
+                        android:layout_height="42dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="31dp"
+                        android:layout_toStartOf="@+id/search_icon"
+                        android:layout_toEndOf="@id/logo"
+                        android:background="@android:drawable/edit_text"
+                        android:hint="Rechercher"
+                        android:padding="8dp" />
+
+                    <ImageView
+                        android:id="@+id/search_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="ss" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/getPopularMovie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/toolbar"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="9dp"
+                        android:backgroundTint="#00334A"
+                        android:text="Films"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintBottom_toTopOf="@+id/getSearch" />
+
+                    <Button
+                        android:id="@+id/getPopularPeople"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/toolbar"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="9dp"
+                        android:backgroundTint="#00334A"
+                        android:text="Acteurs"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintBottom_toTopOf="@+id/getSearch" />
+
+                    <Button
+                        android:id="@+id/getSearch"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/toolbar"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="9dp"
+                        android:backgroundTint="#00334A"
+                        app:icon="@android:drawable/ic_menu_search"
+                        app:iconTint="#FFFFFF" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
@@ -70,19 +118,45 @@
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar">
 
-            <Button
-                android:id="@+id/getHome"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/toolbar"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="9dp"
-                android:backgroundTint="#00334A"
-                android:text="go home"
-                app:iconTint="#FFFFFF" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/categories"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Films"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="8dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewFilms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acteurs"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="8dp"
+                    android:layout_marginTop="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewActeurs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal" />
+            </LinearLayout>
 
         </FrameLayout>
     </RelativeLayout>
