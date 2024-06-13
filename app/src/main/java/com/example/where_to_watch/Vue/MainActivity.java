@@ -37,6 +37,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     Button getPopularMovieButt;
     Button getSearch;
+    Button getHome;
     Button getPopularPersonButt;
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         getPopularPersonButt =findViewById(R.id.getPopularPeople);
         getPopularMovieButt = findViewById(R.id.getPopularMovie);
         getSearch = findViewById(R.id.getSearch);
+        getHome = findViewById(R.id.getHome);
         getPopularMovieButt.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick(View v) {
@@ -132,6 +134,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Créer un Intent pour ouvrir AutreActivity
                 Intent intent = new Intent(MainActivity.this, SearchView.class);
+                startActivity(intent);
+            }
+        });
+        getHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HomeView.class);
                 startActivity(intent);
             }
         });

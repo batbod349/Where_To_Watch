@@ -68,7 +68,23 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar" />
+            android:layout_below="@id/toolbar">
+
+            <Button
+                android:id="@+id/getHome"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/toolbar"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="9dp"
+                android:backgroundTint="#00334A"
+                android:text="go home"
+                app:iconTint="#FFFFFF" />
+
+        </FrameLayout>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -94,4 +110,5 @@
         </LinearLayout>
         </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
+
 
