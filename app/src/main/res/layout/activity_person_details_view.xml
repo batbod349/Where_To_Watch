@@ -47,7 +47,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
                 <TextView
                     android:id="@+id/personBio"
                     android:layout_width="match_parent"
@@ -77,6 +78,13 @@
                     android:layout_height="200dp"
                     android:layout_gravity="center"
                     android:textAlignment="center"/>
+
+                <Button
+                    android:id="@+id/voirCinematographie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#007FA9"
+                    android:text="Voir la cinématographie" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
