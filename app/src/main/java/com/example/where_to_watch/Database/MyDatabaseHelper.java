@@ -18,7 +18,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private final Context context;
     private static final String DATABASE_NAME = "WhereToWatch.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "user_data";
     private static final String COLUMN_ID = "_id";
