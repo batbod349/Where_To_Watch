@@ -71,17 +71,16 @@ public class CinematographieAdapter extends RecyclerView.Adapter<CinematoVH>{
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 int movieposition = holder.getAdapterPosition(); // Obtenez la position actuelle
                 if (movieposition != RecyclerView.NO_POSITION) { // Vérifiez si l'élément existe toujours
                     Intent intent = new Intent(v.getContext(), MovieDetailsView.class);
-                    intent.putExtra("movieID", String.valueOf(movies.get(movieposition).getId()));
+                    intent.putExtra("movieID",String.valueOf(movies.get(movieposition).getId()));
                     v.getContext().startActivity(intent);
                 }
             }
         });
     }
-
 
     //Retourne le nombre total d'éléments dans la liste de films.
     @Override
