@@ -1,7 +1,11 @@
 package com.example.where_to_watch.Vue;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +27,10 @@ import retrofit2.Retrofit;
 public class PopularMovieView extends AppCompatActivity {
     private RecyclerView recyclerViewFilms;
     private RecyclerView recyclerViewActeurs;
+    private ImageButton homeButton;
+    private ImageButton starButton;
+    private ImageButton favoriteButtonBottom;
+    private ImageButton profileButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -32,6 +40,10 @@ public class PopularMovieView extends AppCompatActivity {
 
         recyclerViewFilms = findViewById(R.id.recyclerViewFilms);
         recyclerViewActeurs = findViewById(R.id.recyclerViewActeurs);
+        homeButton = findViewById(R.id.homeButton);
+        starButton = findViewById(R.id.starButton);
+        favoriteButtonBottom = findViewById(R.id.favoriteButtonBottom);
+        profileButton = findViewById(R.id.profileButton);
 
         // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les films
         LinearLayoutManager layoutManagerFilms = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -93,6 +105,24 @@ public class PopularMovieView extends AppCompatActivity {
             public void onFailure(Call<MovieResponse> call, Throwable t) {
                 System.out.println("Erreur lors de la récupération des acteurs : " + t.getMessage());
             }
+        });
+
+        // Configure les clics sur les boutons de navigation en bas
+        homeButton.setOnClickListener(v -> {
+            // Ajoutez l'action pour le bouton home si nécessaire
+        });
+
+        starButton.setOnClickListener(v -> {
+            // Ajoutez l'action pour le bouton star
+        });
+
+        favoriteButtonBottom.setOnClickListener(v -> {
+            Intent intent = new Intent(PopularMovieView.this, FavorisView.class);
+            startActivity(intent);
+        });
+
+        profileButton.setOnClickListener(v -> {
+            // Ajoutez l'action pour le bouton de profil
         });
     }
 }

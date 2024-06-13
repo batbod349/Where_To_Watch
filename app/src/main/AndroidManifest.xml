@@ -15,6 +15,15 @@
         android:theme="@style/Theme.Where_To_Watch"
         tools:targetApi="31">
         <activity
+            android:name=".Models.Footer"
+            android:exported="false" />
+        <activity
+            android:name=".Vue.FavorisView"
+            android:exported="false" />
+        <activity
+            android:name=".Vue.Favoris"
+            android:exported="false" />
+        <activity
             android:name=".Vue.SearchView"
             android:exported="false" />
         <activity

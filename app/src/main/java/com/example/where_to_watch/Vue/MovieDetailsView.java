@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class MovieDetailsView extends AppCompatActivity {
     Button aboBut;
     Button rentBut;
     Button buyBut;
+    ImageButton homeButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -80,6 +82,16 @@ public class MovieDetailsView extends AppCompatActivity {
         aboBut = findViewById(R.id.aboBut);
         rentBut = findViewById(R.id.rentBut);
         buyBut = findViewById(R.id.buyBut);
+        homeButton = findViewById(R.id.homeButton);
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MovieDetailsView.this, PopularMovieView.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
 
@@ -210,13 +222,13 @@ public class MovieDetailsView extends AppCompatActivity {
                         });
 
                     }
-            }
+                }
 
                 @Override
                 public void onFailure(Call<Movie> call, Throwable t) {
                     System.out.println("Erreur lors de la récupération du film : " + t.getMessage());
-                    }
-                });
+                }
+            });
         }
     }
     private void updateListView(List<WatchProviders> providers, String defaultMessage) {
