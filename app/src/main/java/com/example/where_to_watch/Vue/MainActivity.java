@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Genre;
-import com.example.where_to_watch.Models.RetrofitClient;
+import com.example.where_to_watch.Controller.RetrofitClient;
 import com.example.where_to_watch.R;
 import com.google.android.material.navigation.NavigationView;
 
