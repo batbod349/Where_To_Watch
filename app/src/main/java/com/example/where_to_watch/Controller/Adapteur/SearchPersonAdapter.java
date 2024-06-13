@@ -1,4 +1,4 @@
-package com.example.where_to_watch.Controller;
+package com.example.where_to_watch.Controller.Adapteur;
 
 import android.content.Intent;
 import android.util.Log;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.R;
-import com.example.where_to_watch.Vue.MovieDetailsView;
 import com.example.where_to_watch.Vue.PersonDetailsView;
 import com.squareup.picasso.Picasso;
 import java.util.List;

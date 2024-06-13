@@ -20,13 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.where_to_watch.Controller.Responses.MovieResponse;
 import com.example.where_to_watch.Controller.Responses.PersonResponse;
 import com.example.where_to_watch.Controller.RetrofitClient;
-import com.example.where_to_watch.Controller.SearchMovieAdapter;
-import com.example.where_to_watch.Controller.SearchPersonAdapter;
+import com.example.where_to_watch.Controller.Adapteur.SearchMovieAdapter;
+import com.example.where_to_watch.Controller.Adapteur.SearchPersonAdapter;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.R;
-import com.squareup.picasso.BuildConfig;
 
 import java.util.List;
 

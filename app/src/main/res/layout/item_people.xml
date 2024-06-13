@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardElevation="2dp"
+    android:padding="10dp"
+    app:cardBackgroundColor="#F5F5F5">
+
+    <LinearLayout
+        android:id="@+id/cardLayoutPopPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/popularPeopleIV"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/popularPeopleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nom de la personne"
+            android:textAlignment="center"
+            android:textColor="#000000"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
