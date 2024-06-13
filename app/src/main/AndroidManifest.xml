@@ -21,6 +21,11 @@
             android:name=".Vue.SearchView"
             android:exported="false" />
         <activity
+            android:name=".Models.GenreView"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"/>
+        <activity
             android:name=".Vue.MovieDetailsView"
             android:exported="false" />
         <activity

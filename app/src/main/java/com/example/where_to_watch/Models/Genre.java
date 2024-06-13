@@ -1,17 +1,21 @@
 package com.example.where_to_watch.Models;
 
+import android.provider.MediaStore;
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Genre implements Parcelable {
     @SerializedName("id")
     private Integer idMovie;
     @SerializedName("name")
-    private String name;
-
-    public Genre() {
+    String name;
+    @SerializedName("genres")
+    private List<Genre> Genres;
+    public Integer getId() {
+        return id;
     }
 
     // Constructor for Parcelable
@@ -66,5 +70,9 @@ public class Genre implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Genre> getGenres() {
+        return Genres;
     }
 }
