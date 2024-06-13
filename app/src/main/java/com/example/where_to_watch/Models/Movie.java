@@ -1,10 +1,13 @@
 package com.example.where_to_watch.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Movie {
+public class Movie implements Parcelable {
     @SerializedName("title")
     private String title;
     @SerializedName("id")
@@ -26,6 +29,56 @@ public class Movie {
     @SerializedName("media_type")
     private String type;
 
+    // Constructeur par défaut
+    public Movie() {}
+
+    // Constructeur utilisé par Parcelable
+    protected Movie(Parcel in) {
+        title = in.readString();
+        id = in.readInt();
+        posterPath = in.readString();
+        duree = in.readString();
+        dateSortie = in.readString();
+        synopsis = in.readString();
+        byte tmpAdult = in.readByte();
+        adult = tmpAdult == 0 ? null : tmpAdult == 1;
+        type = in.readString();
+        providers = in.createStringArrayList();
+        genres = in.createTypedArrayList(Genre.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeInt(id);
+        dest.writeString(posterPath);
+        dest.writeString(duree);
+        dest.writeString(dateSortie);
+        dest.writeString(synopsis);
+        dest.writeByte((byte) (adult == null ? 0 : adult ? 1 : 2));
+        dest.writeString(type);
+        dest.writeStringList(providers);
+        dest.writeTypedList(genres);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    // Méthodes getter et setter
     public String getType() {
         return type;
     }
@@ -45,6 +98,7 @@ public class Movie {
     public List<Genre> getGenres() {
         return genres;
     }
+
     public String getDuree() {
         return duree;
     }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Movie;
-import com.example.where_to_watch.Controller.MovieAdapter;
+import com.example.where_to_watch.Controller.Adapteur.MovieAdapter;
 import com.example.where_to_watch.Controller.RetrofitClient;
 import com.example.where_to_watch.R;
 import com.example.where_to_watch.Controller.Responses.MovieResponse;

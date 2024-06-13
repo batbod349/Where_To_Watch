@@ -87,13 +87,35 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="Disponibilités"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/backProvidersButt"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#007FA9"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingLeft="13dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="15dp"
+                    android:text="&lt;"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-black"
+                    android:paddingLeft="15dp"
+                    android:text="Disponibilités"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/listProviders"
@@ -224,9 +246,7 @@
         <TextView
             android:id="@+id/acteursTV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="John Doe Doe Jhon\nJohn Doe Doe Jhon"
-            android:textColor="@color/colorOnBackground" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -248,9 +268,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="16dp"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">

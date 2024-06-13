@@ -10,12 +10,11 @@ public class MovieResponse extends Movie {
     @SerializedName("results")
     private List<Movie> movies;
     @SerializedName("cast")
-    private List<People> acteurs;
-    @SerializedName("crew")
-    private List<People> ekip;
-    public List<People> getMovieCrew() { return ekip; }
-    public List<People> getMovieActeurs() { return acteurs; }
+    private List<Movie> cinematoMovies;
+
     public List<Movie> getPopularMovies() {
         return movies;
     }
+    public List<Movie> getSearchMovieResult() { return movies; }
+    public List<Movie> getCinematographie() { return cinematoMovies; }
 }

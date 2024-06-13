@@ -1,4 +1,4 @@
-package com.example.where_to_watch.Controller;
+package com.example.where_to_watch.Controller.Adapteur;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,63 +13,62 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.R;
 import com.example.where_to_watch.Vue.MovieDetailsView;
+import com.example.where_to_watch.Vue.PersonDetailsView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-class MovieVH extends RecyclerView.ViewHolder{
+class CinematoVH extends RecyclerView.ViewHolder{
 
-    TextView movieTitle;
-    ImageView imageView;
-    TextView duree;
-    TextView dateSortie;
-    TextView synopsis;
-    TextView adult;
-    private LinearLayout movieLayout;
-    private MovieAdapter adapter;
+    TextView movieName;
+    ImageView movieImage;
+    private LinearLayout peopleLayout;
+    private CinematographieAdapter adapter;
 
     //Prend une vue (itemView) en paramètre et initialise le ViewHolder avec cette vue. Il initialise également les vues (comme TextView) à l'intérieur de l'élément de vue.
-    public MovieVH(@NonNull View itemView) {
+    public CinematoVH(@NonNull View itemView) {
         super(itemView);
-        movieTitle = itemView.findViewById(R.id.movieTitleTV);
-        imageView = itemView.findViewById(R.id.imageView);
-        //duree = itemView.findViewById(R.id.dureeTV);
-        //dateSortie = itemView.findViewById(R.id.dateSortieTV);
-        //synopsis = itemView.findViewById(R.id.synopsisTV);
-        //adult = itemView.findViewById(R.id.adultTV);
-        movieLayout = itemView.findViewById(R.id.cardLayout);
+        movieName = itemView.findViewById(R.id.popularPeopleName);
+        movieImage = itemView.findViewById(R.id.popularPeopleIV);
+        peopleLayout = itemView.findViewById(R.id.cardLayoutPopPeople);
     }
 
     //Lie l'adaptateur au ViewHolder. Permet d'obtenir une référence à l'adaptateur dans le ViewHolder, ce qui peut être utile pour effectuer des actions sur l'adaptateur depuis le ViewHolder,
-    public MovieVH linkAdapter(MovieAdapter adapter){
+    public CinematoVH linkAdapter(CinematographieAdapter adapter){
         this.adapter = adapter;
         return this;
     }
 
 }
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieVH>{
+public class CinematographieAdapter extends RecyclerView.Adapter<CinematoVH>{
 
     List<Movie> movies;
     //Prend une liste de films en paramètre et initialise l'adaptateur avec cette liste.
-    public MovieAdapter(List<Movie> items) {
+    public CinematographieAdapter(List<Movie> items) {
         this.movies = items;
     }
 
-    //Crée et retourne une instance de MovieVH qui représente un élément de vue individuel.
+    //Crée et retourne une instance de CinematoVH qui représente un élément de vue individuel.
     @NonNull
     @Override
-    public MovieVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CinematoVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_movie, parent, false);
-        return new MovieVH(view).linkAdapter(this);
+                .inflate(R.layout.item_people, parent, false);
+        return new CinematoVH(view).linkAdapter(this);
     }
 
     //Remplit les données de l'élément de vue représenté par le ViewHolder à la position spécifiée.
     @Override
-    public void onBindViewHolder(@NonNull MovieVH holder, int position) {
-        holder.movieTitle.setText(movies.get(position).getTitle());
-        Picasso.get().load("https://image.tmdb.org/t/p/w500" + movies.get(position).getPosterPath()).into(holder.imageView);
+    public void onBindViewHolder(@NonNull CinematoVH holder, int position) {
 
+        if (movies.get(position).getTitle() != null){
+            holder.movieName.setText(movies.get(position).getTitle());
+        } else {
+            holder.movieName.setText("null");
+        }
+        if (movies.get(position).getPosterPath() != null){
+            Picasso.get().load("https://image.tmdb.org/t/p/w500" + movies.get(position).getPosterPath()).into(holder.movieImage);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
