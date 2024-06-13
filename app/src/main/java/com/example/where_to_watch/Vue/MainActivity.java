@@ -24,14 +24,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.where_to_watch.Controller.Adapteur.PopularPeopleAdapter;
+import com.example.where_to_watch.Controller.Adapteur.PopularSeriesAdapter;
 import com.example.where_to_watch.Controller.Adapteur.TopRatedMovieAdapter;
 import com.example.where_to_watch.Controller.Responses.MovieResponse;
 import com.example.where_to_watch.Controller.Responses.PersonResponse;
+import com.example.where_to_watch.Controller.Responses.SeriesResponse;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Genre;
 import com.example.where_to_watch.Controller.RetrofitClient;
 import com.example.where_to_watch.Models.Movie;
 import com.example.where_to_watch.Models.People;
+import com.example.where_to_watch.Models.Serie;
 import com.example.where_to_watch.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -46,12 +49,12 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewFilms;
     private RecyclerView recyclerViewActeurs;
+    private RecyclerView recyclerViewSeries;
     Button getPopularMovieButt;
     Button getSearch;
     Button getPopularPersonButt;
     private DrawerLayout drawerLayout;
     private ListView listView;
-    public MovieService movieService;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewFilms = findViewById(R.id.recyclerViewFilms);
         recyclerViewActeurs = findViewById(R.id.recyclerViewActeurs);
+        recyclerViewSeries = findViewById(R.id.recyclerViewSeries);
 
         // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les films
         LinearLayoutManager layoutManagerFilms = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -75,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les acteurs
         LinearLayoutManager layoutManagerActeurs = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewActeurs.setLayoutManager(layoutManagerActeurs);
+
+        // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les acteurs
+        LinearLayoutManager layoutManagerSeries = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewSeries.setLayoutManager(layoutManagerSeries);
 
         // Créer une instance de MovieService en utilisant Retrofit
         Retrofit retrofit = RetrofitClient.getClient();
@@ -130,6 +138,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Call<SeriesResponse> callSeries = movieService.getPopularSeries("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
+        callSeries.enqueue(new Callback<SeriesResponse>() {
+            @Override
+            public void onResponse(Call<SeriesResponse> call, Response<SeriesResponse> response) {
+                // Récupère le contenu de la réponse
+                SeriesResponse seriesResponse = response.body();
+                // Récupère les différents acteurs contenus dans la réponse pour les ranger dans une liste
+                List<Serie> series = seriesResponse.getPopularSeries();
+                // Créer et initialise notre adaptateur avec les acteurs
+                PopularSeriesAdapter adapterActeurs = new PopularSeriesAdapter(series);
+                // Relie le recyclerView à l'adaptateur
+                recyclerViewSeries.setAdapter(adapterActeurs);
+            }
+
+            @Override
+            public void onFailure(Call<SeriesResponse> call, Throwable t) {
+
+            }
+        });
+
         drawerLayout = findViewById(R.id.drawerlayout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -179,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "Network call failed", t);
             }
         });
-                
+
         getPopularPersonButt =findViewById(R.id.getPopularPeople);
         getPopularMovieButt = findViewById(R.id.getPopularMovie);
         getSearch = findViewById(R.id.getSearch);

@@ -10,64 +10,64 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.where_to_watch.Models.Movie;
+import com.example.where_to_watch.Models.Serie;
 import com.example.where_to_watch.R;
 import com.example.where_to_watch.Vue.MovieDetailsView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-class TopMovieVH extends RecyclerView.ViewHolder{
+class SeriesVH extends RecyclerView.ViewHolder{
 
-    TextView movieTitle;
+    TextView seriesTitle;
     ImageView imageView;
     private LinearLayout movieLayout;
-    private TopRatedMovieAdapter adapter;
+    private PopularSeriesAdapter adapter;
 
     //Prend une vue (itemView) en paramètre et initialise le ViewHolder avec cette vue. Il initialise également les vues (comme TextView) à l'intérieur de l'élément de vue.
-    public TopMovieVH(@NonNull View itemView) {
+    public SeriesVH(@NonNull View itemView) {
         super(itemView);
-        movieTitle = itemView.findViewById(R.id.popularPeopleName);
+        seriesTitle = itemView.findViewById(R.id.popularPeopleName);
         imageView = itemView.findViewById(R.id.popularPeopleIV);
     }
 
     //Lie l'adaptateur au ViewHolder. Permet d'obtenir une référence à l'adaptateur dans le ViewHolder, ce qui peut être utile pour effectuer des actions sur l'adaptateur depuis le ViewHolder,
-    public TopMovieVH linkAdapter(TopRatedMovieAdapter adapter){
+    public SeriesVH linkAdapter(PopularSeriesAdapter adapter){
         this.adapter = adapter;
         return this;
     }
 
 }
 
-public class TopRatedMovieAdapter extends RecyclerView.Adapter<TopMovieVH>{
+public class PopularSeriesAdapter extends RecyclerView.Adapter<SeriesVH>{
 
-    List<Movie> movies;
+    List<Serie> series;
     //Prend une liste de films en paramètre et initialise l'adaptateur avec cette liste.
-    public TopRatedMovieAdapter(List<Movie> items) {
-        this.movies = items;
+    public PopularSeriesAdapter(List<Serie> items) {
+        this.series = items;
     }
 
-    //Crée et retourne une instance de TopMovieVH qui représente un élément de vue individuel.
+    //Crée et retourne une instance de SeriesVH qui représente un élément de vue individuel.
     @NonNull
     @Override
-    public TopMovieVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SeriesVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_people, parent, false);
-        return new TopMovieVH(view).linkAdapter(this);
+        return new SeriesVH(view).linkAdapter(this);
     }
 
     //Remplit les données de l'élément de vue représenté par le ViewHolder à la position spécifiée.
     @Override
-    public void onBindViewHolder(@NonNull TopMovieVH holder, int position) {
+    public void onBindViewHolder(@NonNull SeriesVH holder, int position) {
 
-        holder.movieTitle.setText(movies.get(position).getTitle());
-        Picasso.get().load("https://image.tmdb.org/t/p/w500" + movies.get(position).getPosterPath()).into(holder.imageView);
+        holder.seriesTitle.setText(series.get(position).getName());
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + series.get(position).getPoster_path()).into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                int movieposition = holder.getAdapterPosition(); // Obtenez la position actuelle
-                if (movieposition != RecyclerView.NO_POSITION) { // Vérifiez si l'élément existe toujours
+                int seriesposition = holder.getAdapterPosition(); // Obtenez la position actuelle
+                if (seriesposition != RecyclerView.NO_POSITION) { // Vérifiez si l'élément existe toujours
                     Intent intent = new Intent(v.getContext(), MovieDetailsView.class);
-                    intent.putExtra("movieID",String.valueOf(movies.get(movieposition).getId()));
+                    intent.putExtra("seriesID",String.valueOf(series.get(seriesposition).getId()));
                     v.getContext().startActivity(intent);
                 }
             }
@@ -77,6 +77,6 @@ public class TopRatedMovieAdapter extends RecyclerView.Adapter<TopMovieVH>{
     //Retourne le nombre total d'éléments dans la liste de films.
     @Override
     public int getItemCount() {
-        return movies.size();
+        return series.size();
     }
 }
