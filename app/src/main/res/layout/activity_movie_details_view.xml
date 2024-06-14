@@ -240,5 +240,15 @@
             android:id="@+id/movieSynopsisTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <!-- Étoile (initialisée comme invisible) -->
+        <ImageView
+            android:id="@+id/starIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star"
+            app:tint="@color/star_icon_default_color" />
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
