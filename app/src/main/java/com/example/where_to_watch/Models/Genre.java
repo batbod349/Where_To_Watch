@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Genre implements Parcelable {
@@ -74,5 +77,11 @@ public class Genre implements Parcelable {
 
     public List<Genre> getGenres() {
         return Genres;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name; // This will display the genre name in the ListView
     }
 }

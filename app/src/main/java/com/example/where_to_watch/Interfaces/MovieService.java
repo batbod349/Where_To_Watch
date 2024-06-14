@@ -34,4 +34,7 @@ public interface MovieService {
     Call<PersonResponse> getPopularPeople(@Query("api_key")String apiKey,@Query("lanquage")String language);
     @GET("person/{personID}/movie_credits")
     Call<MovieResponse> getCinematographie(@Path("personID")String movieID, @Query("api_key")String apiKey, @Query("language")String language);
+
+    @GET("discover/movie")
+    Call<MovieResponse> getMoviesByGenre(@Query("api_key") String apiKey, @Query("with_genres") int genreId);
 }

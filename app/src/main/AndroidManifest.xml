@@ -33,6 +33,9 @@
             android:name=".Vue.MovieDetailsView"
             android:exported="false" />
         <activity
+            android:name=".Vue.GenreMoviesView"
+            android:exported="false" />
+        <activity
             android:name=".Vue.PopularMovieView"
             android:exported="false" />
         <activity

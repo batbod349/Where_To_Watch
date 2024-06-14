@@ -37,7 +37,6 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     Button getPopularMovieButt;
     Button getSearch;
-    Button getPopularPersonButt;
     private DrawerLayout drawerLayout;
     private ListView listView;
     public MovieService movieService;
@@ -50,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
 
         drawerLayout = findViewById(R.id.drawerlayout);
 
@@ -67,21 +63,21 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = RetrofitClient.getClient();
         MovieService movieService = retrofit.create(MovieService.class);
 
-        Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "en");
+        Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
 
         call.enqueue(new Callback<Genre>() {
 
             @Override
             public void onResponse(Call<Genre> call, Response<Genre> response) {
                 if (response.isSuccessful()) {
-                    List<String> genreList = new ArrayList<>();
+                    List<Genre> genreList = new ArrayList<>();
                     List<Genre> genres = response.body().getGenres();
 
                     for (Genre genre : genres) {
-                        genreList.add(genre.getName());
+                        genreList.add(genre);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    ArrayAdapter<Genre> adapter = new ArrayAdapter<>(
                             MainActivity.this,
                             android.R.layout.simple_list_item_1,
                             genreList
@@ -91,9 +87,13 @@ public class MainActivity extends AppCompatActivity {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String genre = genreList.get(position);
-                            Toast.makeText(MainActivity.this, "Genre selected: " + genre, Toast.LENGTH_SHORT).show();
+                            Genre selectedGenre = (Genre) parent.getItemAtPosition(position);
+                            Toast.makeText(MainActivity.this, "Genre selected: " + selectedGenre, Toast.LENGTH_SHORT).show();
                             drawerLayout.closeDrawer(GravityCompat.START); // Fermer le tiroir après la sélection
+
+                            Intent intent = new Intent(MainActivity.this, GenreMoviesView.class);
+                            intent.putExtra("genre_id", selectedGenre.getId());
+                            startActivity(intent);
                         }
                     });
 
@@ -107,8 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "Network call failed", t);
             }
         });
-                
-        getPopularPersonButt =findViewById(R.id.getPopularPeople);
+
         getPopularMovieButt = findViewById(R.id.getPopularMovie);
         getSearch = findViewById(R.id.getSearch);
         getPopularMovieButt.setOnClickListener(new View.OnClickListener() {
@@ -116,14 +115,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Créer un Intent pour ouvrir AutreActivity
                 Intent intent = new Intent(MainActivity.this, PopularMovieView.class);
-                startActivity(intent);
-            }
-        });
-        getPopularPersonButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Créer un Intent pour ouvrir AutreActivity
-                Intent intent = new Intent(MainActivity.this, PopularPeopleView.class);
                 startActivity(intent);
             }
         });
