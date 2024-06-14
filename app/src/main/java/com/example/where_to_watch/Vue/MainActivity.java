@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewActeurs;
     private RecyclerView recyclerViewSeries;
     Button getPopularMovieButt;
+    Button getPopularPersonButt;
     Button getSearch;
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -189,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Genre selectedGenre = (Genre) parent.getItemAtPosition(position);
-                            Toast.makeText(MainActivity.this, "Genre selected: " + selectedGenre, Toast.LENGTH_SHORT).show();
                             drawerLayout.closeDrawer(GravityCompat.START); // Fermer le tiroir après la sélection
 
                             Intent intent = new Intent(MainActivity.this, GenreMoviesView.class);

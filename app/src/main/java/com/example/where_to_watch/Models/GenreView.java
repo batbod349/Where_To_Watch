@@ -66,7 +66,6 @@ public class GenreView extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String genre = genreList.get(position);
-                            Toast.makeText(GenreView.this, "Genre selected: " + genre, Toast.LENGTH_SHORT).show();
                         }
                     });
 
