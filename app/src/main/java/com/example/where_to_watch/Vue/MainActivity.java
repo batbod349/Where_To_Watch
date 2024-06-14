@@ -228,6 +228,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        getPopularPersonButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer un Intent pour ouvrir AutreActivity
+                Intent intent = new Intent(MainActivity.this, PopularPeopleView.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
