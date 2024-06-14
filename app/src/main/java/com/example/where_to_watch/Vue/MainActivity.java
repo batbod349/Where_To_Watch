@@ -165,9 +165,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         listView = navigationView.findViewById(R.id.listGenre);
 
-        Retrofit retrofit = RetrofitClient.getClient();
-        MovieService movieService = retrofit.create(MovieService.class);
-
         Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
         call.enqueue(new Callback<Genre>() {
 
