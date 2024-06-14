@@ -2,6 +2,7 @@ package com.example.where_to_watch.Vue;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,10 +20,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.where_to_watch.Controller.Adapteur.PopularPeopleAdapter;
+import com.example.where_to_watch.Controller.Adapteur.PopularSeriesAdapter;
+import com.example.where_to_watch.Controller.Adapteur.TopRatedMovieAdapter;
+import com.example.where_to_watch.Controller.Responses.MovieResponse;
+import com.example.where_to_watch.Controller.Responses.PersonResponse;
+import com.example.where_to_watch.Controller.Responses.SeriesResponse;
+import com.example.where_to_watch.Database.MyDatabaseHelper;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Genre;
 import com.example.where_to_watch.Controller.RetrofitClient;
+import com.example.where_to_watch.Models.Movie;
+import com.example.where_to_watch.Models.People;
+import com.example.where_to_watch.Models.Serie;
 import com.example.where_to_watch.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -35,11 +48,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView recyclerViewFilms;
+    private RecyclerView recyclerViewActeurs;
+    private RecyclerView recyclerViewSeries;
     Button getPopularMovieButt;
     Button getSearch;
     private DrawerLayout drawerLayout;
     private ListView listView;
-    public MovieService movieService;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -49,6 +64,96 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        recyclerViewFilms = findViewById(R.id.recyclerViewFilms);
+        recyclerViewActeurs = findViewById(R.id.recyclerViewActeurs);
+        recyclerViewSeries = findViewById(R.id.recyclerViewSeries);
+
+        // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les films
+        LinearLayoutManager layoutManagerFilms = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewFilms.setLayoutManager(layoutManagerFilms);
+
+        // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les acteurs
+        LinearLayoutManager layoutManagerActeurs = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewActeurs.setLayoutManager(layoutManagerActeurs);
+
+        // Configure le RecyclerView avec un LinearLayoutManager horizontal pour les acteurs
+        LinearLayoutManager layoutManagerSeries = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewSeries.setLayoutManager(layoutManagerSeries);
+
+        // Créer une instance de MovieService en utilisant Retrofit
+        Retrofit retrofit = RetrofitClient.getClient();
+        MovieService movieService = retrofit.create(MovieService.class);
+
+        // Appeler la méthode pour récupérer les films populaires
+        Call<MovieResponse> callFilms = movieService.getPopularMovies("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
+        callFilms.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                if (response.isSuccessful()) {
+                    // Récupère le contenu de la réponse
+                    MovieResponse movieResponse = response.body();
+                    // Récupère les différents films contenus dans la réponse pour les ranger dans une liste
+                    List<Movie> movies = movieResponse.getPopularMovies();
+                    // Créer et initialise notre adaptateur avec les films
+                    TopRatedMovieAdapter adapterFilms = new TopRatedMovieAdapter(movies);
+                    // Relie le recyclerView à l'adaptateur
+                    recyclerViewFilms.setAdapter(adapterFilms);
+                } else {
+                    // Gérer les erreurs
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                System.out.println("Erreur lors de la récupération des films : " + t.getMessage());
+            }
+        });
+
+        // Appeler la méthode pour récupérer les acteurs populaires (si applicable)
+        Call<PersonResponse> callActeurs = movieService.getPopularPeople("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
+        callActeurs.enqueue(new Callback<PersonResponse>() {
+            @Override
+            public void onResponse(Call<PersonResponse> call, Response<PersonResponse> response) {
+                if (response.isSuccessful()) {
+                    // Récupère le contenu de la réponse
+                    PersonResponse personResponse = response.body();
+                    // Récupère les différents acteurs contenus dans la réponse pour les ranger dans une liste
+                    List<People> actors = personResponse.getSearchPeople();
+                    // Créer et initialise notre adaptateur avec les acteurs
+                    PopularPeopleAdapter adapterActeurs = new PopularPeopleAdapter(actors);
+                    // Relie le recyclerView à l'adaptateur
+                    recyclerViewActeurs.setAdapter(adapterActeurs);
+                } else {
+                    // Gérer les erreurs
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PersonResponse> call, Throwable t) {
+                System.out.println("Erreur lors de la récupération des acteurs : " + t.getMessage());
+            }
+        });
+
+        Call<SeriesResponse> callSeries = movieService.getPopularSeries("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
+        callSeries.enqueue(new Callback<SeriesResponse>() {
+            @Override
+            public void onResponse(Call<SeriesResponse> call, Response<SeriesResponse> response) {
+                // Récupère le contenu de la réponse
+                SeriesResponse seriesResponse = response.body();
+                // Récupère les différents acteurs contenus dans la réponse pour les ranger dans une liste
+                List<Serie> series = seriesResponse.getPopularSeries();
+                // Créer et initialise notre adaptateur avec les acteurs
+                PopularSeriesAdapter adapterActeurs = new PopularSeriesAdapter(series);
+                // Relie le recyclerView à l'adaptateur
+                recyclerViewSeries.setAdapter(adapterActeurs);
+            }
+
+            @Override
+            public void onFailure(Call<SeriesResponse> call, Throwable t) {
+
+            }
+        });
 
         drawerLayout = findViewById(R.id.drawerlayout);
 
@@ -64,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         MovieService movieService = retrofit.create(MovieService.class);
 
         Call<Genre> call = movieService.getGenre("d85ec7da27477ca0d57dfd8ffd9fd94d", "fr-FR");
-
         call.enqueue(new Callback<Genre>() {
 
             @Override
@@ -108,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        getPopularPersonButt =findViewById(R.id.getPopularPeople);
         getPopularMovieButt = findViewById(R.id.getPopularMovie);
         getSearch = findViewById(R.id.getSearch);
         getPopularMovieButt.setOnClickListener(new View.OnClickListener() {

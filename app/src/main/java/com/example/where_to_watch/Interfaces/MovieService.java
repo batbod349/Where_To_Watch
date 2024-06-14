@@ -1,5 +1,6 @@
 package com.example.where_to_watch.Interfaces;
 
+import com.example.where_to_watch.Controller.Responses.SeriesResponse;
 import com.example.where_to_watch.Models.Genre;
 import com.example.where_to_watch.Controller.Responses.PersonResponse;
 import com.example.where_to_watch.Models.Movie;
@@ -34,7 +35,8 @@ public interface MovieService {
     Call<PersonResponse> getPopularPeople(@Query("api_key")String apiKey,@Query("lanquage")String language);
     @GET("person/{personID}/movie_credits")
     Call<MovieResponse> getCinematographie(@Path("personID")String movieID, @Query("api_key")String apiKey, @Query("language")String language);
-
     @GET("discover/movie")
     Call<MovieResponse> getMoviesByGenre(@Query("api_key") String apiKey, @Query("with_genres") int genreId);
+    @GET("tv/popular")
+    Call<SeriesResponse> getPopularSeries(@Query("api_key")String apiKey, @Query("language")String language);
 }
