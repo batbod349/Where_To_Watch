@@ -79,12 +79,27 @@
                     android:layout_gravity="center"
                     android:textAlignment="center"/>
 
-                <Button
-                    android:id="@+id/voirCinematographie"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#007FA9"
-                    android:text="Voir la cinématographie" />
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/voirCinematographie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#007FA9"
+                        android:text="Voir la cinématographie" />
+
+                    <!-- Étoile (initialisée comme invisible) -->
+                    <ImageView
+                        android:id="@+id/starIconPerson"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star"
+                        app:tint="@color/star_icon_default_color"
+                        android:layout_marginLeft="15sp"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

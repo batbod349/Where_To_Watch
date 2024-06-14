@@ -19,7 +19,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private final Context context;
     private static final String DATABASE_NAME = "WhereToWatch.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String TABLE_NAME = "user_data";
     private static final String COLUMN_ID = "_id";
@@ -93,10 +93,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return isFavorite;
     }
 
-    public void removeFav(int movieID, String tableName) {
+    public void removeFav(int movieID, String tableName, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            db.delete(tableName, COLUMN_ID_FAV + " = ? AND " + COLUMN_TYPE_FAV + " = ?", new String[] { String.valueOf(movieID), "movie" });
+            db.delete(tableName, COLUMN_ID_FAV + " = ? AND " + COLUMN_TYPE_FAV + " = ?", new String[] { String.valueOf(movieID), type});
         } catch (SQLException e) {
             Log.e("MyDatabaseHelper", "Erreur lors de la suppression du favori : " + e.getMessage());
         } finally {

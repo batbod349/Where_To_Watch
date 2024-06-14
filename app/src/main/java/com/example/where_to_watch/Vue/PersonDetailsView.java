@@ -14,12 +14,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.where_to_watch.Controller.RetrofitClient;
+import com.example.where_to_watch.Database.MyDatabaseHelper;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.People;
 import com.example.where_to_watch.R;
@@ -39,6 +41,7 @@ public class PersonDetailsView extends AppCompatActivity {
     ImageView personImage;
     ListView knownForList;
     Button voirCinematographie;
+    String personWork;
     List<Integer> movieIds = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
@@ -62,6 +65,37 @@ public class PersonDetailsView extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("selectedPerson")) {
             People person = intent.getParcelableExtra("selectedPerson");
+            int personID = person.getId();
+
+            // Exemple dans votre activité ou fragment
+            MyDatabaseHelper dbHelper = new MyDatabaseHelper(this);
+            boolean isFavorite = dbHelper.isFav(personID, person.getWork());
+
+            ImageView starIcon = findViewById(R.id.starIconPerson);
+            if (isFavorite) {
+                starIcon.setColorFilter(ContextCompat.getColor(this, R.color.star_icon_favorite_color));
+            } else {
+                starIcon.setColorFilter(ContextCompat.getColor(this, R.color.star_icon_default_color));
+            }
+
+            starIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean isFavorite = dbHelper.isFav(personID, person.getWork());
+                    if (isFavorite) {
+                        dbHelper.removeFav(personID, "favoris", person.getWork());
+                    } else {
+                        dbHelper.newFav(personID, person.getWork());
+                    }
+
+                    // Mettre à jour la couleur de l'étoile après le changement de favori
+                    if (dbHelper.isFav(personID, person.getWork())) {
+                        starIcon.setColorFilter(ContextCompat.getColor(PersonDetailsView.this, R.color.star_icon_favorite_color));
+                    } else {
+                        starIcon.setColorFilter(ContextCompat.getColor(PersonDetailsView.this, R.color.star_icon_default_color));
+                    }
+                }
+            });
 
             // Créer une instance de MovieService en utilisant Retrofit
             Retrofit retrofit = RetrofitClient.getClient();
@@ -106,6 +140,7 @@ public class PersonDetailsView extends AppCompatActivity {
                         personName.setText(person.getName());
                         personBio.setText(person.getBiography());
                         Picasso.get().load("https://image.tmdb.org/t/p/w500" + person.getProfileImg()).into(personImage);
+                        personWork = person.getWork();
                     }
                 }
                 @Override

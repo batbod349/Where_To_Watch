@@ -129,7 +129,7 @@ public class MovieDetailsView extends AppCompatActivity {
                 public void onClick(View v) {
                     boolean isFavorite = dbHelper.isFav(Integer.parseInt(movieID), "movie");
                     if (isFavorite) {
-                        dbHelper.removeFav(Integer.parseInt(movieID), "favoris");
+                        dbHelper.removeFav(Integer.parseInt(movieID), "favoris", "movie");
                     } else {
                         dbHelper.newFav(Integer.parseInt(movieID), "movie");
                     }

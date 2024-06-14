@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Where_To_Watch"
         tools:targetApi="31">
         <activity
+            android:name=".Vue.SignIn"
+            android:exported="false" />
+        <activity
             android:name=".Vue.HomeView"
             android:exported="false" />
         <activity
