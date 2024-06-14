@@ -13,12 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.where_to_watch.Controller.Responses.PersonResponse;
+import com.example.where_to_watch.Database.MyDatabaseHelper;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.CountryWatchProviders;
 import com.example.where_to_watch.Models.Genre;
@@ -109,6 +112,36 @@ public class MovieDetailsView extends AppCompatActivity {
         if (intent != null) {
             // Récupérer le paramètre "movieID"
             String movieID = intent.getStringExtra("movieID");
+
+            // Exemple dans votre activité ou fragment
+            MyDatabaseHelper dbHelper = new MyDatabaseHelper(this);
+            boolean isFavorite = dbHelper.isFav(Integer.parseInt(movieID), "movie");
+
+            ImageView starIcon = findViewById(R.id.starIcon);
+            if (isFavorite) {
+                starIcon.setColorFilter(ContextCompat.getColor(this, R.color.star_icon_favorite_color));
+            } else {
+                starIcon.setColorFilter(ContextCompat.getColor(this, R.color.star_icon_default_color));
+            }
+
+            starIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean isFavorite = dbHelper.isFav(Integer.parseInt(movieID), "movie");
+                    if (isFavorite) {
+                        dbHelper.removeFav(Integer.parseInt(movieID), "favoris");
+                    } else {
+                        dbHelper.newFav(Integer.parseInt(movieID), "movie");
+                    }
+
+                    // Mettre à jour la couleur de l'étoile après le changement de favori
+                    if (dbHelper.isFav(Integer.parseInt(movieID), "movie")) {
+                        starIcon.setColorFilter(ContextCompat.getColor(MovieDetailsView.this, R.color.star_icon_favorite_color));
+                    } else {
+                        starIcon.setColorFilter(ContextCompat.getColor(MovieDetailsView.this, R.color.star_icon_default_color));
+                    }
+                }
+            });
 
             // Créer une instance de MovieService en utilisant Retrofit
             Retrofit retrofit = RetrofitClient.getClient();

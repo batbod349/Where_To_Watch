@@ -2,6 +2,7 @@ package com.example.where_to_watch.Vue;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,6 +29,7 @@ import com.example.where_to_watch.Controller.Adapteur.TopRatedMovieAdapter;
 import com.example.where_to_watch.Controller.Responses.MovieResponse;
 import com.example.where_to_watch.Controller.Responses.PersonResponse;
 import com.example.where_to_watch.Controller.Responses.SeriesResponse;
+import com.example.where_to_watch.Database.MyDatabaseHelper;
 import com.example.where_to_watch.Interfaces.MovieService;
 import com.example.where_to_watch.Models.Genre;
 import com.example.where_to_watch.Controller.RetrofitClient;

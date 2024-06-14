@@ -8,6 +8,7 @@
         <color name="colorSecondaryVariant">#018786</color>
         <color name="colorOnSecondary">#000000</color>
 
+
         <!-- Couleurs additionnelles -->
         <color name="colorPrimaryDark">#3700B3</color>
         <color name="colorAccent">#03DAC5</color>
@@ -21,4 +22,8 @@
         <!-- Couleurs personnalisées -->
         <color name="colorCustom1">#FF5722</color>
         <color name="colorCustom2">#4CAF50</color>
-    </resources>
+        <color name="star_icon_favorite_color">#FFD700</color> <!-- Exemple de couleur jaune pour favori -->
+        <color name="star_icon_default_color">#808080</color> <!-- Couleur grise par défaut -->
+
+
+</resources>
